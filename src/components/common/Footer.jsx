@@ -34,8 +34,8 @@ const Footer = () => {
 
           <div>
             <h4 className="font-semibold mb-4">Contact</h4>
-            <p className="text-gray-400">contact@marketinsight.com</p>
-            <p className="text-gray-400">+1 (555) 123-4567</p>
+            <p className="text-gray-400">sales@thequantics.com</p>
+            <p className="text-gray-400">+91-111111111</p>
           </div>
 
           <div>
@@ -49,7 +49,7 @@ const Footer = () => {
         </div>
 
         <div className="border-t border-white/10 mt-8 pt-8 text-center text-gray-400">
-          <p>&copy; 2024 MarketInsight. All rights reserved.</p>
+          <p>&copy; 2025 The Quantics. All rights reserved.</p>
         </div>
       </div>
     </footer>

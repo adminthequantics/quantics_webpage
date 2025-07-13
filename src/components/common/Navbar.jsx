@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { HiMenu, HiX } from "react-icons/hi";
+import logo from "../../assets/logo3.png";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,9 +19,10 @@ const Navbar = () => {
     <nav className="fixed w-full z-50 glass-effect">
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center h-20">
-          <Link to="/" className="text-2xl font-bold bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent">
-            MarketInsight
+          <Link to="/" className="flex items-center">
+            <img src={logo} alt="MarketInsight Logo" className="h-auto w-auto max-h-44" />
           </Link>
+
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center space-x-8">
@@ -28,9 +30,8 @@ const Navbar = () => {
               <Link
                 key={item.name}
                 to={item.path}
-                className={`${
-                  item.special ? "bg-gradient-to-r from-secondary to-accent px-6 py-2 rounded-full hover:shadow-lg transition-all duration-300" : "hover:text-secondary transition-colors duration-300"
-                }`}
+                className={`${item.special ? "bg-gradient-to-r from-secondary to-accent px-6 py-2 rounded-full hover:shadow-lg transition-all duration-300" : "hover:text-secondary transition-colors duration-300"
+                  }`}
               >
                 {item.name}
               </Link>
