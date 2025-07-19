@@ -29,461 +29,310 @@ import {
   FaLock,
   FaStar,
   FaAward,
+  FaPoll,
+  FaSearchDollar,
+  FaFileAlt,
+  FaMicroscope,
+  FaUsersCog,
+  FaClipboardList,
+  FaRobot,
+  FaSyncAlt,
+  FaServer,
 } from "react-icons/fa";
+import { HiTrendingUp, HiLightningBolt, HiSparkles, HiChip } from "react-icons/hi";
+import { SiTensorflow, SiPytorch, SiOpenai } from "react-icons/si";
+import { BiNetworkChart } from "react-icons/bi";
 import { Link } from "react-router-dom";
 
 const Services = () => {
-  const [activeCategory, setActiveCategory] = useState("analytics");
-  const [selectedService, setSelectedService] = useState(null);
-  const [isVideoOpen, setIsVideoOpen] = useState(false);
+  const [activeCategory, setActiveCategory] = useState(0);
+  const [hoveredService, setHoveredService] = useState(null);
 
-  // Service categories
-  const categories = [
-    { id: "analytics", name: "Analytics & Insights", icon: <FaChartLine /> },
-    { id: "research", name: "Market Research", icon: <FaSearchLocation /> },
-    { id: "intelligence", name: "Competitive Intelligence", icon: <FaBrain /> },
-    { id: "technology", name: "Technology Solutions", icon: <FaCogs /> },
+  // Main service categories matching homepage style
+  const mainServices = [
+    {
+      id: 1,
+      icon: <FaPoll className="text-4xl" />,
+      title: "Surveys & Polling",
+      shortDesc: "AI-powered surveys that capture deep consumer insights",
+      description: "Create intelligent surveys with dynamic questioning, real-time analysis, and predictive insights. Our AI adapts questions based on responses for maximum data quality.",
+      features: [
+        "AI-powered dynamic questions",
+        "Real-time response analysis",
+        "Multi-channel distribution",
+        "Sentiment analysis",
+        "Predictive modeling",
+        "Automated reporting"
+      ],
+      stats: {
+        accuracy: "95%",
+        responses: "10M+",
+        completion: "87%"
+      },
+      color: "from-blue-500 to-cyan-500",
+      bgColor: "from-blue-50 to-cyan-50",
+    },
+    {
+      id: 2,
+      icon: <FaChartPie className="text-4xl" />,
+      title: "Consumer Analytics",
+      shortDesc: "Understand your audience with behavioral analytics",
+      description: "Deep dive into consumer behavior patterns, preferences, and purchase journeys. Build detailed personas and predict future behaviors with machine learning.",
+      features: [
+        "Behavioral pattern recognition",
+        "Journey mapping & analysis",
+        "Persona development",
+        "Cohort analysis",
+        "Churn prediction",
+        "Lifetime value modeling"
+      ],
+      stats: {
+        insights: "3.5x",
+        accuracy: "92%",
+        segments: "150+"
+      },
+      color: "from-purple-500 to-pink-500",
+      bgColor: "from-purple-50 to-pink-50",
+    },
+    {
+      id: 3,
+      icon: <FaSearchDollar className="text-4xl" />,
+      title: "Competitor Analysis",
+      shortDesc: "Track competitors with real-time intelligence",
+      description: "Monitor competitor strategies, pricing, and market movements in real-time. Get alerts on important changes and identify opportunities before others.",
+      features: [
+        "Real-time monitoring",
+        "Pricing intelligence",
+        "Product tracking",
+        "Marketing analysis",
+        "Patent monitoring",
+        "Strategic alerts"
+      ],
+      stats: {
+        coverage: "24/7",
+        markets: "150+",
+        alerts: "<5min"
+      },
+      color: "from-orange-500 to-red-500",
+      bgColor: "from-orange-50 to-red-50",
+    },
+    {
+      id: 4,
+      icon: <FaFileAlt className="text-4xl" />,
+      title: "Industry Reports",
+      shortDesc: "Comprehensive reports powered by AI insights",
+      description: "Access detailed industry analysis, market forecasts, and trend reports. Our AI analyzes millions of data points to deliver actionable intelligence.",
+      features: [
+        "Custom report generation",
+        "Quarterly market updates",
+        "Trend forecasting",
+        "Risk assessment",
+        "Opportunity mapping",
+        "Expert commentary"
+      ],
+      stats: {
+        reports: "500+",
+        data: "50M+",
+        accuracy: "94%"
+      },
+      color: "from-green-500 to-emerald-500",
+      bgColor: "from-green-50 to-emerald-50",
+    },
   ];
 
-  // Detailed services data
-  const servicesData = {
-    analytics: [
-      {
-        id: 1,
-        icon: <FaChartLine />,
-        title: "Advanced Analytics Platform",
-        shortDesc: "Real-time data analysis with predictive insights",
-        description:
-          "Transform raw data into actionable insights with our cutting-edge analytics platform. Leverage AI-powered algorithms to identify patterns, predict trends, and make data-driven decisions.",
-        features: ["Real-time data processing", "Predictive modeling", "Custom dashboards", "API integration", "Automated reporting", "Machine learning algorithms"],
-        benefits: [
-          { metric: "85%", label: "Faster insights" },
-          { metric: "3.5x", label: "ROI increase" },
-          { metric: "60%", label: "Time saved" },
-        ],
-        tools: ["Python", "TensorFlow", "Apache Spark", "Tableau"],
-        price: "Custom pricing",
-        color: "from-blue-500 to-cyan-500",
-      },
-      {
-        id: 2,
-        icon: <FaChartBar />,
-        title: "Business Intelligence Suite",
-        shortDesc: "Comprehensive BI tools for enterprise decision-making",
-        description: "Empower your organization with enterprise-grade business intelligence tools. Create interactive reports, visualize complex data, and share insights across teams.",
-        features: ["Interactive dashboards", "Data visualization", "Self-service analytics", "Mobile BI apps", "Scheduled reports", "Role-based access"],
-        benefits: [
-          { metric: "95%", label: "User adoption" },
-          { metric: "70%", label: "Faster decisions" },
-          { metric: "2x", label: "Productivity boost" },
-        ],
-        tools: ["Power BI", "Looker", "QlikView", "Sisense"],
-        price: "Starting at $999/month",
-        color: "from-purple-500 to-pink-500",
-      },
-      {
-        id: 3,
-        icon: <FaChartPie />,
-        title: "Performance Analytics",
-        shortDesc: "Track and optimize business performance metrics",
-        description: "Monitor key performance indicators, track goals, and optimize operations with our comprehensive performance analytics solution.",
-        features: ["KPI tracking", "Goal management", "Performance scorecards", "Trend analysis", "Benchmarking", "Alert systems"],
-        benefits: [
-          { metric: "40%", label: "Performance gain" },
-          { metric: "90%", label: "Goal visibility" },
-          { metric: "50%", label: "Process efficiency" },
-        ],
-        tools: ["Datadog", "New Relic", "Grafana", "Prometheus"],
-        price: "Starting at $799/month",
-        color: "from-green-500 to-emerald-500",
-      },
-    ],
-    research: [
-      {
-        id: 4,
-        icon: <FaSearchLocation />,
-        title: "Market Research Platform",
-        shortDesc: "Comprehensive market analysis and consumer insights",
-        description: "Understand your market with deep consumer insights, trend analysis, and competitive intelligence. Our platform combines traditional research methods with AI-powered analytics.",
-        features: ["Consumer surveys", "Market segmentation", "Trend identification", "Sentiment analysis", "Focus group tools", "Research automation"],
-        benefits: [
-          { metric: "75%", label: "Research time saved" },
-          { metric: "95%", label: "Data accuracy" },
-          { metric: "4x", label: "Insights generated" },
-        ],
-        tools: ["Qualtrics", "SurveyMonkey", "SPSS", "R"],
-        price: "Custom pricing",
-        color: "from-orange-500 to-red-500",
-      },
-      {
-        id: 5,
-        icon: <FaUsers />,
-        title: "Consumer Behavior Analytics",
-        shortDesc: "Deep dive into customer preferences and behaviors",
-        description: "Unlock the power of consumer data to understand purchase patterns, preferences, and behaviors. Build detailed customer personas and journey maps.",
-        features: ["Behavioral tracking", "Journey mapping", "Persona development", "Preference analysis", "Cohort analysis", "Churn prediction"],
-        benefits: [
-          { metric: "60%", label: "Better targeting" },
-          { metric: "45%", label: "Reduced churn" },
-          { metric: "3x", label: "Customer LTV" },
-        ],
-        tools: ["Google Analytics", "Mixpanel", "Amplitude", "Heap"],
-        price: "Starting at $1,299/month",
-        color: "from-indigo-500 to-purple-500",
-      },
-      {
-        id: 6,
-        icon: <FaGlobe />,
-        title: "Global Market Intelligence",
-        shortDesc: "International market analysis and expansion insights",
-        description: "Navigate global markets with confidence. Access comprehensive data on international markets, regulations, and opportunities.",
-        features: ["Country profiles", "Market entry analysis", "Regulatory tracking", "Cultural insights", "Risk assessment", "Opportunity mapping"],
-        benefits: [
-          { metric: "80%", label: "Risk reduction" },
-          { metric: "65%", label: "Faster expansion" },
-          { metric: "150%", label: "Market reach" },
-        ],
-        tools: ["Bloomberg", "Euromonitor", "Statista", "IBISWorld"],
-        price: "Enterprise pricing",
-        color: "from-teal-500 to-cyan-500",
-      },
-    ],
-    intelligence: [
-      {
-        id: 7,
-        icon: <FaBrain />,
-        title: "AI-Powered Competitive Intelligence",
-        shortDesc: "Track competitors with machine learning algorithms",
-        description: "Stay ahead of competition with real-time monitoring, predictive analytics, and automated intelligence gathering powered by advanced AI.",
-        features: ["Competitor monitoring", "Price tracking", "Product analysis", "Marketing intelligence", "Patent tracking", "M&A alerts"],
-        benefits: [
-          { metric: "90%", label: "Market coverage" },
-          { metric: "24/7", label: "Monitoring" },
-          { metric: "5x", label: "Faster alerts" },
-        ],
-        tools: ["Crayon", "Klue", "Kompyte", "Custom AI"],
-        price: "Starting at $2,499/month",
-        color: "from-violet-500 to-purple-500",
-      },
-      {
-        id: 8,
-        icon: <FaBrain />,
-        title: "Trend Forecasting Engine",
-        shortDesc: "Predict market trends before they happen",
-        description: "Leverage predictive analytics and machine learning to identify emerging trends, forecast market movements, and capitalize on opportunities.",
-        features: ["Trend detection", "Predictive modeling", "Signal processing", "Pattern recognition", "Scenario planning", "Risk modeling"],
-        benefits: [
-          { metric: "85%", label: "Prediction accuracy" },
-          { metric: "12mo", label: "Forecast horizon" },
-          { metric: "40%", label: "Revenue impact" },
-        ],
-        tools: ["Prophet", "ARIMA", "LSTM Networks", "Custom ML"],
-        price: "Custom pricing",
-        color: "from-pink-500 to-rose-500",
-      },
-      {
-        id: 9,
-        icon: <FaLightbulb />,
-        title: "Innovation Tracking System",
-        shortDesc: "Monitor technological advances and innovations",
-        description: "Track innovations, patents, and technological advances in your industry. Identify opportunities for innovation and stay ahead of disruption.",
-        features: ["Patent monitoring", "Startup tracking", "Tech trend analysis", "Innovation metrics", "R&D intelligence", "Partnership opportunities"],
-        benefits: [
-          { metric: "70%", label: "Innovation speed" },
-          { metric: "200+", label: "Sources tracked" },
-          { metric: "3x", label: "Opportunity discovery" },
-        ],
-        tools: ["PatentScope", "Crunchbase", "CB Insights", "PitchBook"],
-        price: "Starting at $1,999/month",
-        color: "from-amber-500 to-orange-500",
-      },
-    ],
-    technology: [
-      {
-        id: 10,
-        icon: <FaCloud />,
-        title: "Cloud Data Platform",
-        shortDesc: "Scalable cloud infrastructure for big data",
-        description: "Build a modern data infrastructure with our cloud-native platform. Scale seamlessly, integrate any data source, and ensure enterprise-grade security.",
-        features: ["Data lake architecture", "ETL pipelines", "Real-time streaming", "Auto-scaling", "Multi-cloud support", "Data governance"],
-        benefits: [
-          { metric: "99.9%", label: "Uptime SLA" },
-          { metric: "10x", label: "Scalability" },
-          { metric: "50%", label: "Cost reduction" },
-        ],
-        tools: ["AWS", "Azure", "GCP", "Snowflake"],
-        price: "Pay as you grow",
-        color: "from-sky-500 to-blue-500",
-      },
-      {
-        id: 11,
-        icon: <FaCode />,
-        title: "API & Integration Hub",
-        shortDesc: "Connect all your data sources seamlessly",
-        description: "Integrate any data source, application, or service with our comprehensive API platform. Build custom workflows and automate data pipelines.",
-        features: ["REST/GraphQL APIs", "Webhook support", "OAuth integration", "Rate limiting", "API analytics", "Developer portal"],
-        benefits: [
-          { metric: "500+", label: "Integrations" },
-          { metric: "1B+", label: "API calls/month" },
-          { metric: "99.95%", label: "Reliability" },
-        ],
-        tools: ["Kong", "Apigee", "MuleSoft", "Zapier"],
-        price: "Starting at $499/month",
-        color: "from-emerald-500 to-green-500",
-      },
-      {
-        id: 12,
-        icon: <FaMobile />,
-        title: "Mobile Analytics SDK",
-        shortDesc: "Track and analyze mobile app performance",
-        description: "Comprehensive mobile analytics solution for iOS and Android apps. Track user behavior, app performance, and optimize user experience.",
-        features: ["User analytics", "Crash reporting", "Performance monitoring", "A/B testing", "Push analytics", "Deep linking"],
-        benefits: [
-          { metric: "30%", label: "Retention increase" },
-          { metric: "99%", label: "Crash-free users" },
-          { metric: "2x", label: "Engagement boost" },
-        ],
-        tools: ["Firebase", "Segment", "Branch", "Adjust"],
-        price: "Free tier available",
-        color: "from-purple-500 to-violet-500",
-      },
-    ],
-  };
+  // AI Technology Stack
+  const aiCapabilities = [
+    {
+      icon: <SiTensorflow className="text-3xl" />,
+      title: "Deep Learning",
+      description: "Neural networks for complex pattern recognition",
+      metric: "99.9% accuracy"
+    },
+    {
+      icon: <BiNetworkChart className="text-3xl" />,
+      title: "Predictive AI",
+      description: "Forecast trends with machine learning",
+      metric: "12mo horizon"
+    },
+    {
+      icon: <HiChip className="text-3xl" />,
+      title: "NLP Engine",
+      description: "Process text in 40+ languages",
+      metric: "Real-time"
+    },
+    {
+      icon: <FaRobot className="text-3xl" />,
+      title: "AutoML",
+      description: "Self-optimizing algorithms",
+      metric: "24/7 learning"
+    }
+  ];
 
-  const currentServices = servicesData[activeCategory] || [];
+  // Process steps
+  const processSteps = [
+    {
+      number: "01",
+      title: "Data Collection",
+      description: "Gather data from multiple sources with AI validation",
+      icon: <FaDatabase />,
+      duration: "Real-time"
+    },
+    {
+      number: "02",
+      title: "AI Processing",
+      description: "Machine learning algorithms analyze and enrich data",
+      icon: <FaBrain />,
+      duration: "< 1 second"
+    },
+    {
+      number: "03",
+      title: "Insight Generation",
+      description: "Generate actionable insights and recommendations",
+      icon: <FaLightbulb />,
+      duration: "Instant"
+    },
+    {
+      number: "04",
+      title: "Continuous Learning",
+      description: "AI models improve with every interaction",
+      icon: <FaSyncAlt />,
+      duration: "Always"
+    }
+  ];
 
   return (
-    <div className="min-h-screen pt-20">
+    <div className="min-h-screen pt-20 bg-white overflow-hidden">
       <ParticleBackground />
 
-      {/* Hero Section */}
-      <section className="relative py-20">
-        <div className="container mx-auto px-4">
-          <motion.div initial={{ opacity: 0, y: -50 }} animate={{ opacity: 1, y: 0 }} className="text-center">
+      {/* Hero Section - Matching Homepage Style */}
+      <section className="relative py-20 bg-gradient-to-br from-gray-50 via-white to-blue-50">
+        {/* Animated background elements */}
+        <motion.div
+          animate={{ 
+            scale: [1, 1.2, 1],
+            rotate: [0, 90, 0]
+          }}
+          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+          className="absolute top-20 left-10 w-72 h-72 bg-gradient-to-r from-blue-100 to-purple-100 rounded-full blur-3xl opacity-30"
+        />
+        <motion.div
+          animate={{ 
+            scale: [1, 1.3, 1],
+            rotate: [0, -90, 0]
+          }}
+          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+          className="absolute bottom-20 right-10 w-96 h-96 bg-gradient-to-r from-purple-100 to-pink-100 rounded-full blur-3xl opacity-30"
+        />
+
+        <div className="container mx-auto px-4 relative z-10">
+          <motion.div 
+            initial={{ opacity: 0, y: -50 }} 
+            animate={{ opacity: 1, y: 0 }} 
+            className="text-center"
+          >
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="inline-flex items-center space-x-2 bg-gradient-to-r from-secondary/20 to-accent/20 px-4 py-2 rounded-full mb-6"
+              className="inline-flex items-center space-x-2 bg-gradient-to-r from-blue-100 to-purple-100 px-4 py-2 rounded-full mb-6"
             >
-              <FaRocket className="text-secondary" />
-              <span className="text-sm font-medium">Enterprise-Grade Solutions</span>
+              <HiSparkles className="text-purple-600" />
+              <span className="text-sm font-medium text-gray-700">AI-Powered Market Research Solutions</span>
             </motion.div>
 
-            <h1 className="text-5xl md:text-6xl font-bold mb-6">
-              Our <span className="bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent">Services</span>
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 text-gray-900">
+              Transform Data into <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">Competitive Advantage</span>
             </h1>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">Comprehensive market research and analytics solutions powered by advanced AI and machine learning</p>
+            <p className="text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto mb-8">
+              Leverage cutting-edge AI technology to unlock market insights that drive growth and innovation
+            </p>
+
+                       {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Link
+                  to="/demo"
+                  className="inline-flex items-center justify-center space-x-2 bg-gradient-to-r from-blue-600 to-purple-600 px-8 py-4 rounded-full text-white font-semibold hover:shadow-xl transition-all duration-300"
+                >
+                  <span>Start Free Trial</span>
+                  <FaArrowRight />
+                </Link>
+              </motion.div>
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Link
+                  to="/contact"
+                  className="inline-flex items-center justify-center space-x-2 bg-white border-2 border-gray-300 px-8 py-4 rounded-full text-gray-700 font-semibold hover:border-gray-400 hover:shadow-lg transition-all duration-300"
+                >
+                  <span>Talk to Sales</span>
+                </Link>
+              </motion.div>
+            </div>
           </motion.div>
         </div>
       </section>
 
-      {/* Service Categories */}
-      <section className="py-12">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-wrap justify-center gap-4 mb-12">
-            {categories.map((category) => (
-              <motion.button
-                key={category.id}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => setActiveCategory(category.id)}
-                className={`flex items-center space-x-2 px-6 py-3 rounded-full font-medium transition-all ${
-                  activeCategory === category.id ? "bg-gradient-to-r from-secondary to-accent text-white" : "glass-effect hover:bg-white/10"
-                }`}
-              >
-                <span className="text-xl">{category.icon}</span>
-                <span>{category.name}</span>
-              </motion.button>
-            ))}
-          </div>
-
-          {/* Services Grid */}
-          <AnimatePresence mode="wait">
-            <motion.div key={activeCategory} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-              {currentServices.map((service, index) => (
-                <motion.div
-                  key={service.id}
-                  initial={{ opacity: 0, y: 50 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  whileHover={{ y: -10 }}
-                  className="glass-effect rounded-2xl p-6 hover:shadow-2xl transition-all duration-300 cursor-pointer group"
-                  onClick={() => setSelectedService(service)}
-                >
-                  {/* Service Card Header */}
-                  <div className="flex items-start justify-between mb-4">
-                    <div className={`text-4xl bg-gradient-to-r ${service.color} bg-clip-text text-transparent`}>{service.icon}</div>
-                    <FaArrowRight className="text-gray-500 group-hover:text-white transition-colors" />
-                  </div>
-
-                  {/* Service Content */}
-                  <h3 className="text-xl font-bold mb-2">{service.title}</h3>
-                  <p className="text-gray-400 mb-4">{service.shortDesc}</p>
-
-                  {/* Benefits Preview */}
-                  <div className="grid grid-cols-3 gap-2 mb-4">
-                    {service.benefits.map((benefit, i) => (
-                      <div key={i} className="text-center">
-                        <div className="text-lg font-bold text-secondary">{benefit.metric}</div>
-                        <div className="text-xs text-gray-500">{benefit.label}</div>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Price */}
-                  <div className="flex items-center justify-between pt-4 border-t border-white/10">
-                    <span className="text-sm text-gray-400">{service.price}</span>
-                    <span className="text-sm text-secondary">Learn more →</span>
-                  </div>
-                </motion.div>
-              ))}
-            </motion.div>
-          </AnimatePresence>
-        </div>
-      </section>
-
-      {/* Features Comparison */}
-      <section className="py-20">
+      {/* Main Services Grid - Enhanced with Homepage Style */}
+      <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <AnimatedSection>
-            <h2 className="text-4xl font-bold text-center mb-12">
-              Why Choose Our <span className="bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent">Services</span>
-            </h2>
+            <div className="text-center mb-16">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="inline-flex items-center space-x-2 bg-gradient-to-r from-green-100 to-emerald-100 px-4 py-2 rounded-full mb-4"
+              >
+                <FaChartLine className="text-green-600" />
+                <span className="text-sm font-medium text-gray-700">Comprehensive Research Solutions</span>
+              </motion.div>
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900">
+                Everything You Need for <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Market Research</span>
+              </h2>
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                From surveys to advanced analytics, we provide the complete toolkit for understanding your market
+              </p>
+            </div>
           </AnimatedSection>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <AnimatedSection>
-              <motion.div whileHover={{ scale: 1.05 }} className="text-center">
-                <div className="w-20 h-20 mx-auto mb-4 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full flex items-center justify-center">
-                  <FaClock className="text-3xl" />
-                </div>
-                <h3 className="text-xl font-bold mb-2">Real-time Updates</h3>
-                <p className="text-gray-400">Get instant insights with live data streaming and real-time analytics</p>
-              </motion.div>
-            </AnimatedSection>
-
-            <AnimatedSection>
-              <motion.div whileHover={{ scale: 1.05 }} className="text-center">
-                <div className="w-20 h-20 mx-auto mb-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
-                  <FaInfinity className="text-3xl" />
-                </div>
-                <h3 className="text-xl font-bold mb-2">Unlimited Scale</h3>
-                <p className="text-gray-400">Handle any data volume with our cloud-native infrastructure</p>
-              </motion.div>
-            </AnimatedSection>
-
-            <AnimatedSection>
-              <motion.div whileHover={{ scale: 1.05 }} className="text-center">
-                <div className="w-20 h-20 mx-auto mb-4 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center">
-                  <FaLock className="text-3xl" />
-                </div>
-                <h3 className="text-xl font-bold mb-2">Enterprise Security</h3>
-                <p className="text-gray-400">Bank-level encryption and compliance with global standards</p>
-              </motion.div>
-            </AnimatedSection>
-
-            <AnimatedSection>
-              <motion.div whileHover={{ scale: 1.05 }} className="text-center">
-                <div className="w-20 h-20 mx-auto mb-4 bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center">
-                  <FaAward className="text-3xl" />
-                </div>
-                <h3 className="text-xl font-bold mb-2">Award-Winning</h3>
-                <p className="text-gray-400">Recognized as the leading market research platform</p>
-              </motion.div>
-            </AnimatedSection>
-          </div>
-        </div>
-      </section>
-
-      {/* Integration Showcase */}
-      {/* <section className="py-20 border-y border-white/10">
-        <div className="container mx-auto px-4">
-          <AnimatedSection>
-            <h2 className="text-4xl font-bold text-center mb-12">
-              Seamless <span className="bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent">Integrations</span>
-            </h2>
-          </AnimatedSection>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8">
-            {[
-              { name: "Salesforce", icon: "☁️" },
-              { name: "HubSpot", icon: "🟠" },
-              { name: "Slack", icon: "💬" },
-              { name: "Google Analytics", icon: "📊" },
-              { name: "Tableau", icon: "📈" },
-              { name: "Power BI", icon: "📉" },
-              { name: "Shopify", icon: "🛒" },
-              { name: "AWS", icon: "☁️" },
-              { name: "Zendesk", icon: "🎧" },
-              { name: "Stripe", icon: "💳" },
-              { name: "MongoDB", icon: "🍃" },
-              { name: "PostgreSQL", icon: "🐘" },
-            ].map((integration, index) => (
-              <AnimatedSection key={index}>
-                <motion.div whileHover={{ scale: 1.1, rotate: 5 }} className="glass-effect p-4 rounded-xl text-center">
-                  <div className="text-3xl mb-2">{integration.icon}</div>
-                  <p className="text-sm">{integration.name}</p>
-                </motion.div>
-              </AnimatedSection>
-            ))}
-          </div>
-        </div>
-      </section> */}
-
-      {/* Process Timeline */}
-      <section className="py-20">
-        <div className="container mx-auto px-4">
-          <AnimatedSection>
-            <h2 className="text-4xl font-bold text-center mb-12">
-              Our <span className="bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent">Process</span>
-            </h2>
-          </AnimatedSection>
-
-          <div className="max-w-4xl mx-auto">
-            {[
-              {
-                step: 1,
-                title: "Discovery & Assessment",
-                description: "We analyze your current data infrastructure and identify opportunities",
-                duration: "1-2 days",
-                icon: <FaSearchLocation />,
-              },
-              {
-                step: 2,
-                title: "Strategy & Planning",
-                description: "Develop a customized implementation roadmap aligned with your goals",
-                duration: "3-5 days",
-                icon: <FaLightbulb />,
-              },
-              {
-                step: 3,
-                title: "Implementation",
-                description: "Deploy solutions with minimal disruption to your operations",
-                duration: "2-4 weeks",
-                icon: <FaCogs />,
-              },
-              {
-                step: 4,
-                title: "Training & Support",
-                description: "Comprehensive training and ongoing support for your team",
-                duration: "Ongoing",
-                icon: <FaUsers />,
-              },
-            ].map((item, index) => (
-              <AnimatedSection key={index}>
-                <motion.div initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: index * 0.2 }} className="flex items-center mb-8">
-                  <div className="flex-shrink-0">
-                    <div className="w-16 h-16 bg-gradient-to-r from-secondary to-accent rounded-full flex items-center justify-center text-2xl font-bold">{item.step}</div>
-                  </div>
-                  <div className="ml-6 flex-1 glass-effect p-6 rounded-xl">
-                    <div className="flex items-center justify-between mb-2">
-                      <h3 className="text-xl font-bold">{item.title}</h3>
-                      <span className="text-sm text-gray-400">{item.duration}</span>
+            {mainServices.map((service, index) => (
+              <AnimatedSection key={service.id}>
+                <motion.div
+                  whileHover={{ y: -10, scale: 1.02 }}
+                  onHoverStart={() => setHoveredService(service.id)}
+                  onHoverEnd={() => setHoveredService(null)}
+                  className="relative bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 h-full flex flex-col border border-gray-100"
+                >
+                  {/* Animated background gradient on hover */}
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: hoveredService === service.id ? 0.1 : 0 }}
+                    className={`absolute inset-0 bg-gradient-to-br ${service.bgColor} rounded-2xl`}
+                  />
+                  
+                  <div className="relative z-10">
+                    <div className={`w-16 h-16 rounded-xl bg-gradient-to-r ${service.color} flex items-center justify-center text-white mb-4`}>
+                      {service.icon}
                     </div>
-                    <p className="text-gray-400">{item.description}</p>
+                    <h3 className="text-xl font-semibold mb-3 text-gray-900">{service.title}</h3>
+                    <p className="text-gray-600 mb-4 flex-grow">{service.shortDesc}</p>
+                    
+                    {/* Stats Preview */}
+                    <div className="grid grid-cols-3 gap-2 mb-4">
+                      {Object.entries(service.stats).map(([key, value], idx) => (
+                        <div key={idx} className="text-center">
+                          <div className="text-lg font-bold text-gray-900">{value}</div>
+                          <div className="text-xs text-gray-500 capitalize">{key}</div>
+                        </div>
+                      ))}
+                    </div>
+                    
+                    <Link
+                      to={`/services/${service.title.toLowerCase().replace(/\s+/g, '-')}`}
+                      className="inline-flex items-center text-blue-600 font-medium hover:text-blue-700 transition-colors"
+                    >
+                      Learn more <FaArrowRight className="ml-2 text-sm" />
+                    </Link>
                   </div>
-                  <div className="ml-6 text-3xl text-secondary">{item.icon}</div>
                 </motion.div>
               </AnimatedSection>
             ))}
@@ -491,30 +340,180 @@ const Services = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-20">
+      {/* AI Technology Section */}
+      <section className="py-20 bg-gradient-to-b from-gray-50 to-white">
         <div className="container mx-auto px-4">
           <AnimatedSection>
-            <div className="glass-effect p-12 rounded-3xl text-center relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-r from-secondary/20 to-accent/20" />
-              <div className="relative z-10">
-                <h2 className="text-4xl font-bold mb-6">Ready to Transform Your Business?</h2>
-                <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">Join thousands of companies using our services to make smarter, data-driven decisions</p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <motion.div whileHover={{ scale: 1.05 }}>
-                    <Link to="/demo" className="inline-flex items-center space-x-2 bg-white text-dark px-8 py-4 rounded-full text-lg font-semibold hover:shadow-2xl transition-all">
-                      <span>Get Started Free</span>
-                      <FaArrowRight />
-                    </Link>
-                  </motion.div>
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    onClick={() => setIsVideoOpen(true)}
-                    className="inline-flex items-center space-x-2 glass-effect px-8 py-4 rounded-full text-lg font-semibold hover:bg-white/10 transition-all"
+            <div className="text-center mb-16">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="inline-flex items-center space-x-2 bg-gradient-to-r from-purple-100 to-pink-100 px-4 py-2 rounded-full mb-4"
+              >
+                <FaBrain className="text-purple-600" />
+                <span className="text-sm font-medium text-gray-700">Powered by Advanced AI</span>
+              </motion.div>
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900">
+                AI Technology That <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Drives Results</span>
+              </h2>
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                Our proprietary AI models analyze billions of data points to deliver insights that matter
+              </p>
+            </div>
+          </AnimatedSection>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {aiCapabilities.map((capability, index) => (
+              <AnimatedSection key={index}>
+                <motion.div
+                  whileHover={{ y: -5 }}
+                  className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300"
+                >
+                  <div className="w-14 h-14 bg-gradient-to-r from-blue-100 to-purple-100 rounded-xl flex items-center justify-center text-blue-600 mb-4">
+                    {capability.icon}
+                  </div>
+                  <h3 className="text-lg font-semibold mb-2 text-gray-900">{capability.title}</h3>
+                  <p className="text-gray-600 text-sm mb-3">{capability.description}</p>
+                  <div className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                    {capability.metric}
+                  </div>
+                </motion.div>
+              </AnimatedSection>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Interactive Process Timeline */}
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-4">
+          <AnimatedSection>
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900">
+                How Our <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">AI Works</span>
+              </h2>
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                From data collection to actionable insights in milliseconds
+              </p>
+            </div>
+          </AnimatedSection>
+
+          <div className="max-w-5xl mx-auto">
+            <div className="relative">
+              {/* Connection line */}
+              <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-blue-200 via-purple-200 to-pink-200"></div>
+              
+              {processSteps.map((step, index) => (
+                <AnimatedSection key={index}>
+                  <motion.div
+                    initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.2 }}
+                    className={`relative flex items-center mb-12 ${
+                      index % 2 === 0 ? "justify-start" : "justify-end"
+                    }`}
                   >
-                    <FaPlay />
-                    <span>Watch Demo</span>
-                  </motion.button>
+                    <div className={`w-1/2 ${index % 2 === 0 ? "pr-8 text-right" : "pl-8"}`}>
+                      <motion.div
+                                                whileHover={{ scale: 1.05 }}
+                        className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100"
+                      >
+                        <div className="flex items-center space-x-4 mb-3">
+                          {index % 2 !== 0 && (
+                            <div className="text-3xl text-blue-600">{step.icon}</div>
+                          )}
+                          <div className={`flex-1 ${index % 2 === 0 ? "text-right" : ""}`}>
+                            <span className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                              {step.number}
+                            </span>
+                            <h3 className="text-xl font-semibold text-gray-900 mt-2">{step.title}</h3>
+                          </div>
+                          {index % 2 === 0 && (
+                            <div className="text-3xl text-purple-600">{step.icon}</div>
+                          )}
+                        </div>
+                        <p className="text-gray-600">{step.description}</p>
+                        <div className="mt-3 text-sm text-blue-600 font-medium">{step.duration}</div>
+                      </motion.div>
+                    </div>
+                    
+                    {/* Center dot */}
+                    <div className="absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full border-4 border-white shadow-lg z-10"></div>
+                  </motion.div>
+                </AnimatedSection>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Real-time Metrics Dashboard */}
+      <section className="py-20 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <AnimatedSection>
+            <div className="max-w-6xl mx-auto">
+              <div className="bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100">
+                <div className="p-8 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+                  <h2 className="text-3xl font-bold mb-2">Real-Time Performance Metrics</h2>
+                  <p className="text-blue-100">See how our AI processes and delivers insights</p>
+                </div>
+                
+                <div className="p-8">
+                  <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                    {[
+                      { label: "Data Points/Sec", value: "125K", change: "+18%", icon: <FaDatabase /> },
+                      { label: "AI Accuracy", value: "99.9%", change: "+2.1%", icon: <FaBrain /> },
+                      { label: "Response Time", value: "<100ms", change: "-15%", icon: <FaClock /> },
+                      { label: "Active Models", value: "247", change: "+12", icon: <FaServer /> },
+                    ].map((metric, index) => (
+                      <motion.div
+                        key={index}
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        transition={{ delay: 0.1 * index, type: "spring" }}
+                        className="bg-gradient-to-br from-gray-50 to-gray-100 p-6 rounded-xl"
+                      >
+                        <div className="flex items-center justify-between mb-3">
+                          <div className="text-2xl text-blue-600">{metric.icon}</div>
+                          <span className={`text-sm font-semibold ${
+                            metric.change.startsWith("+") ? "text-green-600" : "text-red-600"
+                          }`}>
+                            {metric.change}
+                          </span>
+                        </div>
+                        <div className="text-3xl font-bold text-gray-900 mb-1">{metric.value}</div>
+                        <div className="text-sm text-gray-600">{metric.label}</div>
+                      </motion.div>
+                    ))}
+                  </div>
+
+                  {/* Live Activity Feed */}
+                  <div className="bg-gray-50 rounded-xl p-6">
+                    <h3 className="text-lg font-semibold mb-4 text-gray-900">Live Processing Activity</h3>
+                    <div className="space-y-3">
+                      {[
+                        { action: "Survey completed", detail: "Consumer Electronics Study", time: "2s ago", icon: <FaPoll /> },
+                        { action: "AI insight generated", detail: "Market trend detected", time: "5s ago", icon: <FaBrain /> },
+                        { action: "Report published", detail: "Q4 Industry Analysis", time: "1m ago", icon: <FaFileAlt /> },
+                        { action: "Data synchronized", detail: "150K new responses", time: "2m ago", icon: <FaDatabase /> },
+                      ].map((activity, index) => (
+                        <motion.div
+                          key={index}
+                          initial={{ x: -20, opacity: 0 }}
+                          animate={{ x: 0, opacity: 1 }}
+                          transition={{ delay: index * 0.1 }}
+                          className="flex items-center space-x-4 p-3 bg-white rounded-lg"
+                        >
+                          <div className="text-blue-600">{activity.icon}</div>
+                          <div className="flex-1">
+                            <div className="font-medium text-gray-900">{activity.action}</div>
+                            <div className="text-sm text-gray-600">{activity.detail}</div>
+                          </div>
+                          <div className="text-xs text-gray-500">{activity.time}</div>
+                        </motion.div>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -522,190 +521,98 @@ const Services = () => {
         </div>
       </section>
 
-      {/* Service Detail Modal */}
-      <AnimatePresence>
-        {selectedService && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
-            onClick={() => setSelectedService(null)}
-          >
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="glass-effect p-8 rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
-              onClick={(e) => e.stopPropagation()}
-            >
-              {/* Modal Header */}
-              <div className="flex items-start justify-between mb-6">
-                <div className="flex items-center space-x-4">
-                  <div className={`text-5xl bg-gradient-to-r ${selectedService.color} bg-clip-text text-transparent`}>{selectedService.icon}</div>
-                  <div>
-                    <h2 className="text-3xl font-bold">{selectedService.title}</h2>
-                    <p className="text-gray-400">{selectedService.price}</p>
-                  </div>
-                </div>
-                <button onClick={() => setSelectedService(null)} className="text-gray-400 hover:text-white text-2xl">
-                  ×
-                </button>
-              </div>
-
-              {/* Modal Content */}
-              <div className="space-y-6">
-                <p className="text-lg text-gray-300">{selectedService.description}</p>
-
-                {/* Features Grid */}
-                <div>
-                  <h3 className="text-xl font-bold mb-4">Key Features</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    {selectedService.features.map((feature, index) => (
-                      <motion.div key={index} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: index * 0.05 }} className="flex items-center space-x-3">
-                        <FaCheckCircle className="text-green-500 flex-shrink-0" />
-                        <span className="text-gray-300">{feature}</span>
-                      </motion.div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Benefits */}
-                <div>
-                  <h3 className="text-xl font-bold mb-4">Expected Benefits</h3>
-                  <div className="grid grid-cols-3 gap-4">
-                    {selectedService.benefits.map((benefit, index) => (
-                      <motion.div
-                        key={index}
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        transition={{ delay: 0.2 + index * 0.1, type: "spring" }}
-                        className="glass-effect p-4 rounded-xl text-center"
-                      >
-                        <div className={`text-3xl font-bold bg-gradient-to-r ${selectedService.color} bg-clip-text text-transparent mb-2`}>{benefit.metric}</div>
-                        <p className="text-sm text-gray-400">{benefit.label}</p>
-                      </motion.div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Technologies */}
-                <div>
-                  <h3 className="text-xl font-bold mb-4">Technologies We Use</h3>
-                  <div className="flex flex-wrap gap-2">
-                    {selectedService.tools.map((tool, index) => (
-                      <motion.span
-                        key={index}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.3 + index * 0.05 }}
-                        className="px-4 py-2 bg-white/10 rounded-full text-sm"
-                      >
-                        {tool}
-                      </motion.span>
-                    ))}
-                  </div>
-                </div>
-
-                {/* CTA Buttons */}
-                <div className="flex flex-col sm:flex-row gap-4 pt-6 border-t border-white/10">
-                  <motion.div whileHover={{ scale: 1.05 }} className="flex-1">
-                    <Link to="/demo" className="w-full inline-flex items-center justify-center space-x-2 bg-gradient-to-r from-secondary to-accent px-6 py-3 rounded-full font-semibold">
-                      <span>Schedule Demo</span>
-                      <FaArrowRight />
-                    </Link>
-                  </motion.div>
-                  <motion.button whileHover={{ scale: 1.05 }} className="flex-1 inline-flex items-center justify-center space-x-2 glass-effect px-6 py-3 rounded-full font-semibold hover:bg-white/10">
-                    <FaDownload />
-                    <span>Download Brochure</span>
-                  </motion.button>
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Video Modal */}
-      <AnimatePresence>
-        {isVideoOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
-            onClick={() => setIsVideoOpen(false)}
-          >
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="relative w-full max-w-4xl aspect-video bg-black rounded-2xl overflow-hidden"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <button
-                onClick={() => setIsVideoOpen(false)}
-                className="absolute top-4 right-4 z-10 w-10 h-10 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center hover:bg-white/20 transition-colors"
-              >
-                ×
-              </button>
-
-              <div className="w-full h-full flex items-center justify-center">
-                <div className="text-center">
-                  <FaPlay className="text-6xl text-secondary mb-4 mx-auto" />
-                  <p className="text-xl">Service Demo Video</p>
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Testimonials Section */}
-      <section className="py-20 bg-gradient-to-b from-transparent to-black/50">
+      {/* Success Stories */}
+      <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <AnimatedSection>
-            <h2 className="text-4xl font-bold text-center mb-12">
-              What Our <span className="bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent">Clients Say</span>
-            </h2>
+            <div className="text-center mb-16">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="inline-flex items-center space-x-2 bg-gradient-to-r from-yellow-100 to-orange-100 px-4 py-2 rounded-full mb-4"
+              >
+                <FaAward className="text-yellow-600" />
+                <span className="text-sm font-medium text-gray-700">Success Stories</span>
+              </motion.div>
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900">
+                Real Results from <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Real Clients</span>
+              </h2>
+            </div>
           </AnimatedSection>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {[
               {
-                quote: "The analytics platform transformed how we make decisions. ROI was immediate and substantial.",
-                author: "Sarah Johnson",
-                role: "CTO, TechCorp",
-                service: "Advanced Analytics Platform",
-                rating: 5,
+                company: "TechCorp Global",
+                industry: "Technology",
+                challenge: "Needed to understand emerging market trends",
+                solution: "AI-powered market analysis platform",
+                results: [
+                  "45% increase in market share",
+                  "3x faster product launches",
+                  "$5M in new opportunities identified"
+                ],
+                quote: "The AI insights transformed our strategy completely.",
+                author: "Sarah Chen, VP Strategy"
               },
               {
-                quote: "Market intelligence that actually works. We're always one step ahead of competitors now.",
-                author: "Michael Chen",
-                role: "VP Strategy, RetailGiant",
-                service: "Competitive Intelligence",
-                rating: 5,
+                company: "RetailMax",
+                industry: "E-commerce",
+                challenge: "Struggling with customer retention",
+                solution: "Consumer behavior analytics suite",
+                results: [
+                  "60% reduction in churn rate",
+                  "2.5x increase in LTV",
+                  "85% prediction accuracy"
+                ],
+                quote: "We finally understand our customers at scale.",
+                author: "Mike Johnson, CEO"
               },
               {
-                quote: "The integration was seamless and the support team is exceptional. Highly recommended!",
-                author: "Emily Rodriguez",
-                role: "Data Director, FinanceHub",
-                service: "Cloud Data Platform",
-                rating: 5,
-              },
-            ].map((testimonial, index) => (
+                company: "FinanceHub",
+                industry: "Financial Services",
+                challenge: "Complex compliance and risk analysis",
+                solution: "Real-time risk monitoring system",
+                results: [
+                  "90% faster compliance checks",
+                  "Zero false negatives",
+                  "$2M saved annually"
+                ],
+                quote: "The platform exceeded all our expectations.",
+                author: "Lisa Wang, Chief Risk Officer"
+              }
+            ].map((story, index) => (
               <AnimatedSection key={index}>
-                <motion.div whileHover={{ y: -10 }} className="glass-effect p-6 rounded-xl h-full flex flex-col">
-                  <div className="flex items-center mb-4">
-                    {[...Array(testimonial.rating)].map((_, i) => (
-                      <FaStar key={i} className="text-yellow-500" />
-                    ))}
+                <motion.div
+                  whileHover={{ y: -10 }}
+                  className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 h-full flex flex-col"
+                >
+                  <div className="mb-6">
+                    <h3 className="text-2xl font-bold text-gray-900 mb-2">{story.company}</h3>
+                    <p className="text-sm text-gray-600 mb-4">{story.industry}</p>
+                    <div className="text-sm text-gray-700 mb-4">
+                      <span className="font-semibold">Challenge:</span> {story.challenge}
+                    </div>
+                    <div className="text-sm text-gray-700 mb-4">
+                      <span className="font-semibold">Solution:</span> {                      story.solution}
+                    </div>
                   </div>
-                  <p className="text-gray-300 mb-4 flex-1">"{testimonial.quote}"</p>
-                  <div className="space-y-1">
-                    <p className="font-semibold">{testimonial.author}</p>
-                    <p className="text-sm text-gray-400">{testimonial.role}</p>
-                    <p className="text-xs text-secondary">{testimonial.service}</p>
+                  
+                  <div className="mb-6 flex-grow">
+                    <h4 className="font-semibold text-gray-900 mb-3">Results:</h4>
+                    <ul className="space-y-2">
+                      {story.results.map((result, idx) => (
+                        <li key={idx} className="flex items-start space-x-2">
+                          <FaCheckCircle className="text-green-500 mt-0.5 flex-shrink-0" />
+                          <span className="text-sm text-gray-700">{result}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  
+                  <div className="border-t border-gray-100 pt-4">
+                    <p className="text-gray-600 italic mb-2">"{story.quote}"</p>
+                    <p className="text-sm text-gray-500">— {story.author}</p>
                   </div>
                 </motion.div>
               </AnimatedSection>
@@ -714,97 +621,339 @@ const Services = () => {
         </div>
       </section>
 
-      {/* FAQ Section */}
-      <section className="py-20">
+      {/* Pricing Preview */}
+      {/* <section className="py-20 bg-gradient-to-b from-gray-50 to-white">
         <div className="container mx-auto px-4">
           <AnimatedSection>
-            <h2 className="text-4xl font-bold text-center mb-12">
-              Frequently Asked <span className="bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent">Questions</span>
-            </h2>
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900">
+                Simple, Transparent <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Pricing</span>
+              </h2>
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                Choose the plan that fits your research needs. Scale up or down anytime.
+              </p>
+            </div>
+          </AnimatedSection>
+
+          <div className="max-w-5xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {[
+                {
+                  name: "Starter",
+                  price: "$299",
+                  period: "/month",
+                  description: "Perfect for small teams",
+                  features: [
+                    "Up to 1,000 survey responses",
+                    "Basic analytics dashboard",
+                    "Email support",
+                    "5 team members",
+                    "API access"
+                  ],
+                  cta: "Start Free Trial",
+                  popular: false
+                },
+                {
+                  name: "Professional",
+                  price: "$999",
+                  period: "/month",
+                  description: "Most popular for growing companies",
+                  features: [
+                    "Up to 10,000 survey responses",
+                    "Advanced AI analytics",
+                    "Priority support",
+                    "Unlimited team members",
+                    "Custom integrations",
+                    "White-label options"
+                  ],
+                  cta: "Start Free Trial",
+                  popular: true
+                },
+                {
+                  name: "Enterprise",
+                  price: "Custom",
+                  period: "",
+                  description: "Tailored for large organizations",
+                  features: [
+                    "Unlimited survey responses",
+                    "Dedicated AI models",
+                    "24/7 phone support",
+                    "Custom deployment",
+                    "SLA guarantee",
+                    "Training & onboarding"
+                  ],
+                  cta: "Contact Sales",
+                  popular: false
+                }
+              ].map((plan, index) => (
+                <motion.div
+                  key={index}
+                  whileHover={{ y: -10 }}
+                  className={`relative bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 ${
+                    plan.popular ? "border-2 border-blue-600" : "border border-gray-200"
+                  }`}
+                >
+                  {plan.popular && (
+                    <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                      <span className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-1 rounded-full text-sm font-medium">
+                        Most Popular
+                      </span>
+                    </div>
+                  )}
+                  
+                  <div className="text-center mb-6">
+                    <h3 className="text-2xl font-bold text-gray-900 mb-2">{plan.name}</h3>
+                    <p className="text-gray-600 mb-4">{plan.description}</p>
+                    <div className="text-4xl font-bold text-gray-900">
+                      {plan.price}
+                      <span className="text-lg text-gray-600">{plan.period}</span>
+                    </div>
+                  </div>
+                  
+                  <ul className="space-y-3 mb-8">
+                    {plan.features.map((feature, idx) => (
+                      <li key={idx} className="flex items-start space-x-3">
+                        <FaCheckCircle className="text-green-500 mt-0.5 flex-shrink-0" />
+                        <span className="text-gray-700">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className={`w-full py-3 rounded-full font-medium transition-all ${
+                      plan.popular
+                        ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:shadow-lg"
+                        : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                    }`}
+                  >
+                    {plan.cta}
+                  </motion.button>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section> */}
+
+      {/* Integration Partners */}
+      {/* <section className="py-20 bg-white">
+        <div className="container mx-auto px-4">
+          <AnimatedSection>
+            <div className="text-center mb-16">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="inline-flex items-center space-x-2 bg-gradient-to-r from-green-100 to-emerald-100 px-4 py-2 rounded-full mb-4"
+              >
+                <FaNetworkWired className="text-green-600" />
+                <span className="text-sm font-medium text-gray-700">Seamless Integrations</span>
+              </motion.div>
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900">
+                Works With Your <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Favorite Tools</span>
+              </h2>
+            </div>
+          </AnimatedSection>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 max-w-4xl mx-auto">
+            {[
+              "Salesforce", "HubSpot", "Slack", "Microsoft", "Google", "Tableau",
+              "PowerBI", "Zapier", "Mailchimp", "Segment", "Mixpanel", "Amplitude"
+            ].map((partner, index) => (
+              <motion.div
+                key={index}
+                whileHover={{ y: -5 }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.05 }}
+                className="bg-gray-50 rounded-xl p-6 flex items-center justify-center hover:shadow-lg transition-all duration-300"
+              >
+                <div className="text-center">
+                  <div className="w-12 h-12 bg-gradient-to-r from-gray-200 to-gray-300 rounded-lg flex items-center justify-center mx-auto mb-2 font-bold text-gray-700">
+                    {partner.slice(0, 2).toUpperCase()}
+                  </div>
+                  <p className="text-xs text-gray-600">{partner}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section> */}
+
+      {/* Final CTA */}
+      
+
+      {/* FAQ Section */}
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-4">
+          <AnimatedSection>
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900">
+                Frequently Asked <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Questions</span>
+              </h2>
+            </div>
           </AnimatedSection>
 
           <div className="max-w-3xl mx-auto space-y-4">
             {[
               {
-                question: "How long does implementation typically take?",
-                answer: "Most services can be implemented within 2-4 weeks. Simple integrations can be done in days, while enterprise deployments may take 6-8 weeks.",
+                question: "How quickly can I get started?",
+                answer: "You can start collecting data within minutes. Our AI-powered setup wizard guides you through creating your first survey or analysis in under 5 minutes."
               },
               {
-                question: "Do you offer custom pricing for startups?",
-                answer: "Yes! We have special startup packages and can create custom plans based on your needs and budget. Contact us for details.",
+                question: "What makes your AI different?",
+                answer: "Our proprietary AI models are trained on billions of market research data points and continuously learn from new data. This enables 99.9% accuracy and insights you won't find elsewhere."
               },
               {
-                question: "What kind of support do you provide?",
-                answer: "We offer 24/7 technical support, dedicated account managers, comprehensive documentation, and regular training sessions.",
+                question: "Can I integrate with my existing tools?",
+                answer: "Yes! We offer 100+ native integrations and a robust API. Connect with Salesforce, HubSpot, Tableau, and more in just a few clicks."
               },
               {
-                question: "Can I switch between services or upgrade later?",
-                answer: "Absolutely! Our platform is designed to grow with you. You can upgrade, downgrade, or switch services at any time.",
+                question: "How secure is my data?",
+                answer: "We use bank-level encryption and are SOC 2 Type II certified. Your data is encrypted at rest and in transit, with regular security audits."
               },
               {
-                question: "Do you provide data migration services?",
-                answer: "Yes, we offer complete data migration services to ensure a smooth transition from your existing systems.",
-              },
+                question: "What support do you offer?",
+                answer: "All plans include email support. Professional plans get priority support, and Enterprise customers receive 24/7 phone support with dedicated success managers."
+              }
             ].map((faq, index) => (
               <AnimatedSection key={index}>
-                <details className="glass-effect p-6 rounded-xl group">
-                  <summary className="font-semibold cursor-pointer flex items-center justify-between">
-                    {faq.question}
-                    <span className="text-secondary group-open:rotate-180 transition-transform">▼</span>
-                  </summary>
-                  <p className="mt-4 text-gray-400">{faq.answer}</p>
-                </details>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                >
+                  <details className="bg-gray-50 p-6 rounded-2xl group cursor-pointer">
+                    <summary className="font-semibold text-gray-900 flex items-center justify-between">
+                      {faq.question}
+                      <span className="text-blue-600 group-open:rotate-180 transition-transform">
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        </svg>
+                      </span>
+                    </summary>
+                    <p className="mt-4 text-gray-600">{faq.answer}</p>
+                  </details>
+                </motion.div>
               </AnimatedSection>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Resources Section */}
-      <section className="py-20 border-t border-white/10">
-        <div className="container mx-auto px-4">
+      <section className="py-20 relative overflow-hidden bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600">
+        <div className="absolute inset-0 bg-black opacity-10" />
+        
+        {/* Animated background shapes */}
+        <motion.div
+          animate={{
+            scale: [1, 1.2, 1],
+                        rotate: [0, 90, 0],
+          }}
+          transition={{
+            duration: 20,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+          className="absolute top-10 left-10 w-64 h-64 bg-white opacity-5 rounded-full blur-3xl"
+        />
+        <motion.div
+          animate={{
+            scale: [1, 1.3, 1],
+            rotate: [0, -90, 0],
+          }}
+          transition={{
+            duration: 25,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+          className="absolute bottom-10 right-10 w-96 h-96 bg-white opacity-5 rounded-full blur-3xl"
+        />
+
+        <div className="container mx-auto px-4 relative z-10">
           <AnimatedSection>
-            <h2 className="text-4xl font-bold text-center mb-12">
-              Helpful <span className="bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent">Resources</span>
-            </h2>
+            <div className="max-w-4xl mx-auto text-center">
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ type: "spring" }}
+                className="inline-flex items-center justify-center w-20 h-20 bg-white/20 backdrop-blur-sm rounded-full mb-8"
+              >
+                <HiSparkles className="text-4xl text-white" />
+              </motion.div>
+
+              <h2 className="text-5xl md:text-6xl font-bold mb-6 text-white">
+                Ready to Transform Your <span className="text-yellow-300">Research Process?</span>
+              </h2>
+
+              <p className="text-xl text-gray-100 mb-8 max-w-2xl mx-auto">
+                Join 10,000+ companies using our AI-powered platform to make smarter decisions faster
+              </p>
+
+              <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                  <Link
+                    to="/demo"
+                    className="inline-flex items-center justify-center space-x-2 bg-white text-blue-600 px-8 py-4 rounded-full text-lg font-semibold hover:shadow-2xl transition-all duration-300"
+                  >
+                    <span>Start Free Trial</span>
+                    <FaArrowRight />
+                  </Link>
+                </motion.div>
+
+                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                  <Link
+                    to="/contact"
+                    className="inline-flex items-center justify-center space-x-2 bg-transparent border-2 border-white text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-white/10 transition-all duration-300"
+                  >
+                    <span>Schedule Demo</span>
+                  </Link>
+                </motion.div>
+              </div>
+
+              {/* <div className="flex items-center justify-center space-x-8 text-white/80">
+                <div className="flex items-center space-x-2">
+                  <FaCheckCircle />
+                  <span className="text-sm">No credit card required</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <FaCheckCircle />
+                  <span className="text-sm">14-day free trial</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <FaCheckCircle />
+                  <span className="text-sm">Cancel anytime</span>
+                </div>
+              </div> */}
+            </div>
           </AnimatedSection>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            <motion.a href="#" whileHover={{ scale: 1.05 }} className="glass-effect p-6 rounded-xl text-center group">
-              <FaDatabase className="text-4xl text-secondary mx-auto mb-4" />
-              <h3 className="text-xl font-bold mb-2">API Documentation</h3>
-              <p className="text-gray-400 mb-4">Complete guides and references for developers</p>
-              <span className="text-secondary group-hover:underline">Explore Docs →</span>
-            </motion.a>
-
-            <motion.a href="#" whileHover={{ scale: 1.05 }} className="glass-effect p-6 rounded-xl text-center group">
-              <FaLightbulb className="text-4xl text-accent mx-auto mb-4" />
-              <h3 className="text-xl font-bold mb-2">Case Studies</h3>
-              <p className="text-gray-400 mb-4">See how others achieved success with our platform</p>
-              <span className="text-accent group-hover:underline">View Studies →</span>
-            </motion.a>
-
-            <motion.a href="#" whileHover={{ scale: 1.05 }} className="glass-effect p-6 rounded-xl text-center group">
-              <FaUsers className="text-4xl text-purple-500 mx-auto mb-4" />
-              <h3 className="text-xl font-bold mb-2">Community Forum</h3>
-              <p className="text-gray-400 mb-4">Connect with other users and share insights</p>
-              <span className="text-purple-500 group-hover:underline">Join Community →</span>
-            </motion.a>
-          </div>
         </div>
       </section>
 
-      {/* Floating Action Button */}
-      <motion.div initial={{ opacity: 0, y: 100 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1 }} className="fixed bottom-8 right-8 z-40">
+      {/* Floating Chat Widget */}
+      <motion.div
+        initial={{ opacity: 0, y: 100 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 2 }}
+        className="fixed bottom-8 right-8 z-40"
+      >
         <motion.button
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
-          className="bg-gradient-to-r from-secondary to-accent p-4 rounded-full shadow-2xl shadow-secondary/50 flex items-center space-x-2 group"
+          className="bg-gradient-to-r from-blue-600 to-purple-600 p-4 rounded-full shadow-2xl text-white group relative"
         >
-          <span className="max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-xs transition-all duration-300">Need Help?</span>
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-          </svg>
+          <div className="relative">
+            <FaBrain className="text-xl" />
+            <span className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full animate-pulse"></span>
+          </div>
+          <motion.div
+            initial={{ opacity: 0, scale: 0 }}
+            whileHover={{ opacity: 1, scale: 1 }}
+            className="absolute bottom-full right-0 mb-2 bg-gray-900 text-white px-3 py-1 rounded-lg text-sm whitespace-nowrap"
+          >
+            AI Assistant Online
+          </motion.div>
         </motion.button>
       </motion.div>
     </div>

@@ -3,9 +3,6 @@ import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion"
 import { Link } from "react-router-dom";
 import AnimatedSection from "../components/common/AnimatedSection";
 import ParticleBackground from "../components/common/ParticleBackground";
-import Hero from "../components/home/Hero";
-import ServicesGrid from "../components/home/ServicesGrid";
-import StatsCounter from "../components/home/StatsCounter";
 import {
   FaChartLine,
   FaBrain,
@@ -20,609 +17,767 @@ import {
   FaQuoteLeft,
   FaCheckCircle,
   FaClock,
-  FaInfinity,
-  FaMobile,
-  FaCloud,
-  FaDatabase,
   FaStar,
   FaAward,
-  FaCertificate,
-  FaCode,
+  FaDatabase,
+  FaChartBar,
+  FaPoll,
+  FaSearchDollar,
+  FaFileAlt,
+  FaChartPie,
+  FaMicroscope,
+  FaUsersCog,
+  FaClipboardList,
+  FaRobot,
+  FaNetworkWired,
+  FaCogs,
+  FaLayerGroup,
+  FaSync,
+  FaServer,
 } from "react-icons/fa";
-import { SiGoogle, SiAmazon, SiIberia, SiOracle, SiSalesforce, SiAdobe, SiSap } from "react-icons/si";
+import { HiTrendingUp, HiLightningBolt, HiSparkles, HiChip } from "react-icons/hi";
+import { SiTensorflow, SiPytorch, SiOpenai } from "react-icons/si";
+import { BiNetworkChart } from "react-icons/bi";
 
 const Home = () => {
-  const [activeFeature, setActiveFeature] = useState(0);
-  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
+  const [activeHeadline, setActiveHeadline] = useState(0);
+  const [activeMetric, setActiveMetric] = useState(0);
   const { scrollY } = useScroll();
   const y1 = useTransform(scrollY, [0, 300], [0, 50]);
   const y2 = useTransform(scrollY, [0, 300], [0, -50]);
 
-  // Auto-rotate features
+  // Hero headlines rotation
+  const headlines = [
+    {
+      title: "Unlock Consumer Insights with AI-Powered Research",
+      subtitle: "Transform raw data into actionable intelligence that drives growth",
+    },
+    {
+      title: "Make Smarter Decisions with Real-Time Data",
+      subtitle: "Access live market trends and consumer behavior analytics instantly",
+    },
+    {
+      title: "Stay Ahead with Predictive Market Intelligence",
+      subtitle: "Anticipate market shifts before your competition does",
+    },
+  ];
+
   useEffect(() => {
     const interval = setInterval(() => {
-      setActiveFeature((prev) => (prev + 1) % 4);
-    }, 5000);
+      setActiveHeadline((prev) => (prev + 1) % headlines.length);
+    }, 4000);
     return () => clearInterval(interval);
   }, []);
 
-  // Features data
-  const features = [
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveMetric((prev) => (prev + 1) % 4);
+    }, 2000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Services data
+  const services = [
     {
-      icon: <FaBrain />,
-      title: "AI-Powered Intelligence",
-      description: "Advanced machine learning algorithms analyze billions of data points to provide predictive insights",
-      stats: "95% Accuracy",
+      icon: <FaPoll className="text-4xl" />,
+      title: "Surveys & Polling",
+      description: "Create and deploy intelligent surveys that capture deep consumer insights",
+      features: ["AI-powered questions", "Real-time responses", "Multi-channel distribution"],
       color: "from-blue-500 to-cyan-500",
     },
     {
-      icon: <FaClock />,
-      title: "Real-Time Analytics",
-      description: "Get instant market updates and live data streaming with sub-second latency",
-      stats: "<100ms Response",
+      icon: <FaChartPie className="text-4xl" />,
+      title: "Consumer Analytics",
+      description: "Understand your audience with advanced behavioral analytics",
+      features: ["Demographic profiling", "Purchase patterns", "Sentiment analysis"],
       color: "from-purple-500 to-pink-500",
     },
     {
-      icon: <FaGlobe />,
-      title: "Global Coverage",
-      description: "Access comprehensive market data from 150+ countries in 40+ languages",
-      stats: "150+ Markets",
-      color: "from-green-500 to-emerald-500",
+      icon: <FaSearchDollar className="text-4xl" />,
+      title: "Competitor Analysis",
+      description: "Track and analyze competitor strategies in real-time",
+      features: ["Market positioning", "Pricing intelligence", "Campaign tracking"],
+      color: "from-orange-500 to-red-500",
     },
     {
-      icon: <FaShieldAlt />,
-      title: "Enterprise Security",
-      description: "Bank-level encryption and SOC 2 Type II certified infrastructure",
-      stats: "99.99% Uptime",
+      icon: <FaFileAlt className="text-4xl" />,
+      title: "Industry Reports",
+      description: "Access comprehensive reports on market trends and forecasts",
+      features: ["Custom reports", "Quarterly updates", "Expert insights"],
+      color: "from-green-500 to-emerald-500",
+    },
+  ];
+
+  // AI Features
+  const aiFeatures = [
+    {
+      icon: <SiTensorflow className="text-4xl" />,
+      title: "Deep Learning Models",
+      description: "Neural networks process complex market patterns with 99.9% accuracy",
+      metric: "50M+ parameters",
       color: "from-orange-500 to-red-500",
+    },
+    {
+      icon: <BiNetworkChart className="text-4xl" />,
+      title: "Predictive Analytics",
+      description: "Forecast market trends up to 12 months in advance with AI precision",
+      metric: "95% accuracy rate",
+      color: "from-blue-500 to-purple-500",
+    },
+    {
+      icon: <HiChip className="text-4xl" />,
+      title: "Natural Language Processing",
+      description: "Analyze sentiment from millions of consumer reviews and social posts",
+      metric: "40+ languages",
+      color: "from-green-500 to-teal-500",
+    },
+    {
+      icon: <FaRobot className="text-4xl" />,
+      title: "Automated Insights",
+      description: "AI automatically identifies patterns and generates actionable recommendations",
+      metric: "24/7 analysis",
+      color: "from-purple-500 to-pink-500",
+    },
+  ];
+
+  // Real-time metrics
+  const realtimeMetrics = [
+    { label: "Active Surveys", value: "2,847", change: "+12%", icon: <FaClipboardList /> },
+    { label: "Response Rate", value: "87.3%", change: "+5.2%", icon: <FaChartBar /> },
+    { label: "Data Points/Sec", value: "125K", change: "+18%", icon: <FaDatabase /> },
+    { label: "AI Insights", value: "3,542", change: "+23%", icon: <FaBrain /> },
+  ];
+
+  // Management features
+  const managementFeatures = [
+    {
+      icon: <FaUsersCog className="text-3xl" />,
+      title: "Complete Management",
+      description: "End-to-end research project management with AI automation",
+      features: [
+        "Project timeline optimization",
+        "Resource allocation AI",
+        "Automated reporting",
+        "Smart notifications",
+      ],
+    },
+    {
+      icon: <FaUsers className="text-3xl" />,
+      title: "Active Team Collaboration",
+      description: "Real-time collaboration tools powered by AI assistants",
+      features: [
+        "Live co-editing",
+        "AI meeting summaries",
+        "Smart task assignment",
+        "Progress tracking",
+      ],
+    },
+    {
+      icon: <FaMicroscope className="text-3xl" />,
+      title: "Quality Data Analysis",
+      description: "Enterprise-grade data quality with AI validation",
+      features: [
+        "Automated data cleaning",
+        "Outlier detection",
+        "Cross-validation AI",
+        "Quality scoring",
+      ],
     },
   ];
 
   // Client testimonials
   const testimonials = [
     {
-      quote: "This platform transformed how we understand our market. The AI insights are game-changing.",
-      author: "Sarah Chen",
-      role: "VP of Strategy, Fortune 500",
-      company: "TechCorp",
+      quote: "The AI-powered insights helped us identify a $5M market opportunity we would have missed.",
+      author: "Sarah Johnson",
+      role: "Chief Marketing Officer",
+      company: "TechCorp Global",
       rating: 5,
     },
     {
-      quote: "We reduced our research time by 80% while getting 3x more actionable insights.",
-      author: "Michael Roberts",
-      role: "CEO",
-      company: "InnovateCo",
+      quote: "We cut our research time by 75% while getting 10x more actionable insights.",
+      author: "Michael Chen",
+      role: "VP of Strategy",
+      company: "RetailMax",
       rating: 5,
     },
     {
-      quote: "The ROI was immediate. We identified $2M in new opportunities within the first month.",
-      author: "Lisa Wang",
-      role: "Director of Analytics",
-      company: "GlobalRetail",
+      quote: "The real-time consumer analytics transformed our product development process.",
+      author: "Emma Williams",
+      role: "Head of Innovation",
+      company: "FoodTech Inc",
       rating: 5,
-    },
-  ];
-
-  // Platform capabilities
-  const capabilities = [
-    {
-      title: "Data Processing",
-      value: "50M+",
-      description: "Data points analyzed daily",
-    },
-    {
-      title: "AI Models",
-      value: "200+",
-      description: "Proprietary ML algorithms",
-    },
-    {
-      title: "API Calls",
-      value: "1B+",
-      description: "Monthly API requests",
-    },
-    {
-      title: "Accuracy Rate",
-      value: "99.9%",
-      description: "Data precision guarantee",
     },
   ];
 
   return (
-    <div className="overflow-hidden">
-      {/* Enhanced Hero Section */}
-      <section className="relative min-h-screen flex items-center py-20">
+    <div className="overflow-hidden bg-white">
+      {/* Hero Section with Sliding Headlines */}
+      <section className="relative min-h-screen flex items-center py-20 bg-gradient-to-br from-gray-50 via-white to-blue-50">
         <ParticleBackground />
 
         {/* Animated background elements */}
-        <motion.div style={{ y: y1 }} className="absolute top-20 left-10 w-72 h-72 bg-gradient-to-r from-secondary/20 to-accent/20 rounded-full blur-3xl" />
-        <motion.div style={{ y: y2 }} className="absolute bottom-20 right-10 w-96 h-96 bg-gradient-to-r from-accent/20 to-secondary/20 rounded-full blur-3xl" />
+        <motion.div style={{ y: y1 }} className="absolute top-20 left-10 w-72 h-72 bg-gradient-to-r from-blue-100 to-purple-100 rounded-full blur-3xl opacity-30" />
+        <motion.div style={{ y: y2 }} className="absolute bottom-20 right-10 w-96 h-96 bg-gradient-to-r from-purple-100 to-pink-100 rounded-full blur-3xl opacity-30" />
 
         <div className="container mx-auto px-4 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-                className="inline-flex items-center space-x-2 bg-gradient-to-r from-secondary/20 to-accent/20 px-4 py-2 rounded-full mb-6"
-              >
-                <FaAward className="text-yellow-500" />
-                <span className="text-sm font-medium">#1 Market Research Platform 2024</span>
-              </motion.div>
-
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6">
-                Start your <span className="bg-gradient-to-r from-secondary via-accent to-purple-500 bg-clip-text text-transparent">Market Research</span> Experience
-              </h1>
-
-              <p className="text-xl md:text-2xl text-gray-300 mb-8">
-                Unlock powerful AI-driven insights that transform data into competitive advantage. Join 1000+ companies making smarter decisions.
-              </p>
-
-              <div className="flex flex-col sm:flex-row gap-4 mb-8">
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                  <Link
-                    to="/demo"
-                    className="inline-flex items-center justify-center space-x-2 bg-gradient-to-r from-secondary to-accent px-8 py-4 rounded-full text-lg font-semibold hover:shadow-2xl hover:shadow-secondary/50 transition-all duration-300"
-                  >
-                    <span>Start Free Trial</span>
-                    <FaArrowRight />
-                  </Link>
+          <div className="max-w-7xl mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              {/* Left column - Content */}
+              <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
+                {/* Badge */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 }}
+                  className="inline-flex items-center space-x-2 bg-gradient-to-r from-blue-100 to-purple-100 px-4 py-2 rounded-full mb-6"
+                >
+                  <HiSparkles className="text-purple-600" />
+                  <span className="text-sm font-medium text-gray-700">Powered by Advanced AI Technology</span>
                 </motion.div>
 
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => setIsVideoModalOpen(true)}
-                  className="inline-flex items-center justify-center space-x-2 glass-effect px-8 py-4 rounded-full text-lg font-semibold hover:bg-white/10 transition-all duration-300"
-                >
-                  <FaPlay />
-                  <span>Watch Demo</span>
-                </motion.button>
-              </div>
+                {/* Sliding Headlines */}
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={activeHeadline}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.5 }}
+                  >
+                    <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-gray-900 leading-tight">
+                      {headlines[activeHeadline].title.split(" ").map((word, index) => (
+                        <span key={index}>
+                          {word.includes("AI") || word.includes("Real-Time") || word.includes("Predictive") ? (
+                            <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">{word}</span>
+                          ) : (
+                            word
+                          )}{" "}
+                        </span>
+                      ))}
+                    </h1>
+                    <p className="text-xl text-gray-600 mb-8">{headlines[activeHeadline].subtitle}</p>
+                  </motion.div>
+                </AnimatePresence>
 
-              {/* Trust badges */}
-              <div className="flex items-center space-x-6">
-                <div className="flex -space-x-2">
-                  {[...Array(5)].map((_, i) => (
-                    <div key={i} className="w-10 h-10 rounded-full bg-gradient-to-r from-secondary to-accent flex items-center justify-center text-xs font-bold border-2 border-dark">
-                      {String.fromCharCode(65 + i)}
-                    </div>
-                  ))}
+                {/* CTA Buttons */}
+                <div className="flex flex-col sm:flex-row gap-4 mb-12">
+                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                    <Link
+                      to="/demo"
+                      className="inline-flex items-center justify-center space-x-2 bg-gradient-to-r from-blue-600 to-purple-600 px-8 py-4 rounded-full text-white font-semibold hover:shadow-xl transition-all duration-300"
+                    >
+                      <span>Start Free Trial</span>
+                      <FaArrowRight />
+                    </Link>
+                  </motion.div>
+
+                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                    <Link
+                      to="/contact"
+                      className="inline-flex items-center justify-center space-x-2 bg-white border-2 border-gray-300 px-8 py-4 rounded-full text-gray-700 font-semibold hover:border-gray-400 hover:shadow-lg transition-all duration-300"
+                    >
+                      <span>Schedule Demo</span>
+                    </Link>
+                  </motion.div>
                 </div>
-                <div>
-                  <div className="flex items-center space-x-1">
+
+                {/* Trust indicators */}
+                <div className="flex items-center space-x-8">
+                  <div className="flex -space-x-3">
                     {[...Array(5)].map((_, i) => (
-                      <FaStar key={i} className="text-yellow-500 text-sm" />
+                      <div key={i} className="w-10 h-10 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center text-white font-bold border-2 border-white">
+                        {i + 1}K+
+                      </div>
                     ))}
                   </div>
-                  <p className="text-sm text-gray-400">Trusted by 1000+ companies</p>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Interactive 3D visualization placeholder */}
-            <motion.div initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }} className="relative">
-              <div className="relative w-full glass-effect rounded-2xl p-6 overflow-hidden">
-                {/* Animated dashboard preview */}
-                <div className="absolute inset-0 bg-gradient-to-br from-secondary/10 to-accent/10 rounded-2xl" />
-
-                {/* Dashboard Header */}
-                <motion.div initial={{ y: -20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.3 }} className="relative flex items-center justify-between mb-4">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                    <span className="text-sm text-gray-400">Live Dashboard</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <span className="text-xs text-gray-500">Last updated:</span>
-                    <span className="text-xs text-gray-400">2 seconds ago</span>
-                  </div>
-                </motion.div>
-
-                {/* Main Metrics Grid - Adjusted for smaller screens */}
-                <div className="relative grid grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
-                  <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: 0.4, type: "spring" }} className="glass-effect p-3 rounded-xl">
-                    <div className="flex items-center justify-between mb-1">
-                      <FaChartLine className="text-secondary text-sm" />
-                      <span className="text-xs text-green-500">+12%</span>
-                    </div>
-                    <div className="text-lg lg:text-xl font-bold">$2.4M</div>
-                    <div className="text-xs text-gray-400">Market Size</div>
-                  </motion.div>
-
-                  <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: 0.5, type: "spring" }} className="glass-effect p-3 rounded-xl">
-                    <div className="flex items-center justify-between mb-1">
-                      <FaUsers className="text-accent text-sm" />
-                      <span className="text-xs text-green-500">+8%</span>
-                    </div>
-                    <div className="text-lg lg:text-xl font-bold">18.5K</div>
-                    <div className="text-xs text-gray-400">Active Users</div>
-                  </motion.div>
-
-                  <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: 0.6, type: "spring" }} className="glass-effect p-3 rounded-xl">
-                    <div className="flex items-center justify-between mb-1">
-                      <FaTrophy className="text-yellow-500 text-sm" />
-                      <span className="text-xs text-green-500">+24%</span>
-                    </div>
-                    <div className="text-lg lg:text-xl font-bold">89%</div>
-                    <div className="text-xs text-gray-400">Win Rate</div>
-                  </motion.div>
-
-                  <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: 0.7, type: "spring" }} className="glass-effect p-3 rounded-xl">
-                    <div className="flex items-center justify-between mb-1">
-                      <FaRocket className="text-purple-500 text-sm" />
-                      <span className="text-xs text-green-500">+15%</span>
-                    </div>
-                    <div className="text-lg lg:text-xl font-bold">342</div>
-                    <div className="text-xs text-gray-400">New Leads</div>
-                  </motion.div>
-                </div>
-
-                {/* Chart Section - Simplified */}
-                <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-3 mb-4">
-                  {/* Line Chart */}
-                  <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.8 }} className="glass-effect p-3 rounded-xl">
-                    <h3 className="text-sm font-semibold mb-2">Market Trends</h3>
-                    <div className="relative h-24">
-                      {/* Animated line chart */}
-                      <svg className="w-full h-full" viewBox="0 0 300 100">
-                        <motion.path
-                          d="M0,80 Q50,40 100,60 T200,30 T300,50"
-                          fill="none"
-                          stroke="url(#gradient)"
-                          strokeWidth="3"
-                          initial={{ pathLength: 0 }}
-                          animate={{ pathLength: 1 }}
-                          transition={{ delay: 1, duration: 2 }}
-                        />
-                        <defs>
-                          <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                            <stop offset="0%" stopColor="#3B82F6" />
-                            <stop offset="100%" stopColor="#8B5CF6" />
-                          </linearGradient>
-                        </defs>
-                      </svg>
-                    </div>
-                    <div className="flex justify-between mt-1 text-xs text-gray-400">
-                      <span>Jan</span>
-                      <span>Mar</span>
-                      <span>May</span>
-                      <span>Jul</span>
-                    </div>
-                  </motion.div>
-
-                  {/* Bar Chart */}
-                  <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.9 }} className="glass-effect p-3 rounded-xl">
-                    <h3 className="text-sm font-semibold mb-2">Performance</h3>
-                    <div className="space-y-2">
-                      {[
-                        { label: "Engagement", value: 85, color: "from-blue-500 to-cyan-500" },
-                        { label: "Conversion", value: 72, color: "from-purple-500 to-pink-500" },
-                        { label: "Retention", value: 94, color: "from-green-500 to-emerald-500" },
-                      ].map((metric, i) => (
-                        <div key={i}>
-                          <div className="flex justify-between text-xs mb-1">
-                            <span className="text-gray-400">{metric.label}</span>
-                            <span className="text-gray-300">{metric.value}%</span>
-                          </div>
-                          <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
-                            <motion.div
-                              initial={{ width: 0 }}
-                              animate={{ width: `${metric.value}%` }}
-                              transition={{ delay: 1 + i * 0.2, duration: 0.8 }}
-                              className={`h-full bg-gradient-to-r ${metric.color}`}
-                            />
-                          </div>
-                        </div>
+                  <div>
+                    <div className="flex items-center space-x-1">
+                      {[...Array(5)].map((_, i) => (
+                        <FaStar key={i} className="text-yellow-500 text-sm" />
                       ))}
                     </div>
-                  </motion.div>
+                    <p className="text-sm text-gray-600 mt-1">Trusted by 10,000+ researchers</p>
+                  </div>
                 </div>
+              </motion.div>
 
-                {/* Activity Feed - Simplified */}
-                <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 1.2 }} className="relative glass-effect p-3 rounded-xl">
-                  <h3 className="text-sm font-semibold mb-2">Real-time Activity</h3>
-                  <div className="space-y-2">
-                    {[
-                      { icon: <FaChartLine className="text-xs" />, text: "New trend in APAC", time: "2s", color: "text-secondary" },
-                      { icon: <FaUsers className="text-xs" />, text: "Competitor update", time: "1m", color: "text-accent" },
-                      { icon: <FaLightbulb className="text-xs" />, text: "Growth opportunity", time: "3m", color: "text-yellow-500" },
-                    ].map((activity, i) => (
-                      <motion.div key={i} initial={{ x: -20, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: 1.3 + i * 0.1 }} className="flex items-center space-x-2 text-xs">
-                        <div className={`${activity.color}`}>{activity.icon}</div>
-                        <span className="text-gray-300 flex-1 truncate">{activity.text}</span>
-                        <span className="text-gray-500">{activity.time}</span>
+              {/* Right column - Real-Time Metrics Dashboard */}
+              <motion.div initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }} className="relative">
+                <div className="relative bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-100 p-6">
+                  {/* Header */}
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                      <span className="text-sm font-medium text-gray-700">Real-Time Conversion Metrics</span>
+                    </div>
+                    <FaSync className="text-blue-600 animate-spin" />
+                  </div>
+
+                  {/* Metrics Grid */}
+                  <div className="grid grid-cols-2 gap-4 mb-6">
+                    {realtimeMetrics.map((metric, index) => (
+                      <motion.div
+                        key={index}
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        transition={{ delay: 0.5 + index * 0.1, type: "spring" }}
+                        className={`bg-gradient-to-br ${
+                          activeMetric === index ? "from-blue-50 to-purple-50 ring-2 ring-blue-500" : "from-gray-50 to-gray-100"
+                        } p-4 rounded-xl transition-all duration-300`}
+                      >
+                        <div className="flex items-center justify-between mb-2">
+                          <div className="text-2xl text-blue-600">{metric.icon}</div>
+                          <span className={`text-xs font-semibold ${
+                            metric.change.startsWith("+") ? "text-green-600" : "text-red-600"
+                          }`}>
+                            {metric.change}
+                          </span>
+                        </div>
+                        <div className="text-2xl font-bold text-gray-900">{metric.value}</div>
+                        <div className="text-xs text-gray-600">{metric.label}</div>
                       </motion.div>
                     ))}
                   </div>
-                </motion.div>
 
-                {/* Floating AI indicator - positioned better */}
-                <motion.div
-                  animate={{
-                    y: [0, -10, 0],
-                  }}
-                  transition={{
-                    duration: 3,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
-                  className="absolute bottom-4 right-4 glass-effect p-2 rounded-lg"
-                >
-                  <div className="flex items-center space-x-2">
-                    <FaBrain className="text-lg text-accent" />
-                    <div className="text-xs">
-                      <div className="font-semibold">AI Active</div>
+                  {/* Real-Time Survey Stats */}
+                  <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-4 rounded-xl mb-4">
+                    <h3 className="text-sm font-semibold text-gray-700 mb-3">Real-Time Survey Stats</h3>
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-gray-600">Completion Rate</span>
+                        <div className="flex items-center space-x-2">
+                          <div className="w-32 h-2 bg-gray-200 rounded-full overflow-hidden">
+                            <motion.div
+                              initial={{ width: 0 }}
+                              animate={{ width: "87%" }}
+                              transition={{ duration: 1, delay: 0.5 }}
+                              className="h-full bg-gradient-to-r from-blue-500 to-purple-500"
+                            />
+                          </div>
+                          <span className="text-xs font-semibold text-gray-700">87%</span>
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-gray-600">Response Quality</span>
+                        <div className="flex items-center space-x-2">
+                          <div className="w-32 h-2 bg-gray-200 rounded-full overflow-hidden">
+                            <motion.div
+                              initial={{ width: 0 }}
+                              animate={{ width: "94%" }}
+                              transition={{ duration: 1, delay: 0.7 }}
+                              className="h-full bg-gradient-to-r from-green-500 to-emerald-500"
+                            />
+                          </div>
+                          <span className="text-xs font-semibold text-gray-700">94%</span>
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-gray-600">AI Confidence</span>
+                        <div className="flex items-center space-x-2">
+                          <div className="w-32 h-2 bg-gray-200 rounded-full overflow-hidden">
+                            <motion.div
+                              initial={{ width: 0 }}
+                              animate={{ width: "98%" }}
+                              transition={{ duration: 1, delay: 0.9 }}
+                              className="h-full bg-gradient-to-r from-purple-500 to-pink-500"
+                            />
+                          </div>
+                          <span className="text-xs font-semibold text-gray-700">98%</span>
+                        </div>
+                      </div>
                     </div>
                   </div>
+
+                  {/* AI Processing Indicator */}
+                  <motion.div
+                    animate={{
+                      y: [0, -5, 0],
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }}
+                    className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-3 rounded-lg flex items-center justify-between"
+                  >
+                    <div className="flex items-center space-x-3">
+                      <FaBrain className="text-xl" />
+                      <div>
+                        <div className="text-sm font-semibold">AI Engine Active</div>
+                        <div className="text-xs opacity-90">Processing 125K data points/sec</div>
+                      </div>
+                    </div>
+                    <div className="flex space-x-1">
+                      <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+                      <div className="w-2 h-2 bg-white rounded-full animate-pulse" style={{ animationDelay: "0.2s" }}></div>
+                      <div className="w-2 h-2 bg-white rounded-full animate-pulse" style={{ animationDelay: "0.4s" }}></div>
+                    </div>
+                  </motion.div>
+                </div>
+
+                {/* Floating badge */}
+                <motion.div
+                  animate={{ rotate: [0, 5, -5, 0] }}
+                  transition={{ duration: 4, repeat: Infinity }}
+                  className="absolute -top-4 -right-4 bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg"
+                >
+                  LIVE
                 </motion.div>
-              </div>
-            </motion.div>
+              </motion.div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Logo Cloud */}
-
-      {/* Interactive Features Section */}
-      <section className="py-20">
+      {/* AI Features Section */}
+      <section className="py-20 bg-gradient-to-b from-gray-50 to-white">
         <div className="container mx-auto px-4">
           <AnimatedSection>
             <div className="text-center mb-16">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="inline-flex items-center space-x-2 bg-gradient-to-r from-secondary/20 to-accent/20 px-4 py-2 rounded-full mb-4"
+                className="inline-flex items-center space-x-2 bg-gradient-to-r from-purple-100 to-pink-100 px-4 py-2 rounded-full mb-4"
               >
-                <FaRocket className="text-secondary" />
-                <span className="text-sm font-medium">Powered by Advanced AI</span>
+                <FaBrain className="text-purple-600" />
+                <span className="text-sm font-medium text-gray-700">Powered by Advanced AI</span>
               </motion.div>
-              <h2 className="text-4xl md:text-5xl font-bold mb-6">
-                Why Market Leaders Choose <span className="bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent">Our Platform</span>
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900">
+                AI Technology That <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Drives Results</span>
               </h2>
-              <p className="text-xl text-gray-300 max-w-3xl mx-auto">Experience the future of market intelligence with our cutting-edge features</p>
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                Our proprietary AI models analyze billions of data points to deliver insights that matter
+              </p>
             </div>
           </AnimatedSection>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            {/* Feature selector */}
-            <div className="space-y-6">
-              {features.map((feature, index) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {aiFeatures.map((feature, index) => (
+              <AnimatedSection key={index}>
                 <motion.div
-                  key={index}
-                  onClick={() => setActiveFeature(index)}
-                  whileHover={{ x: 10 }}
-                  className={`glass-effect p-6 rounded-xl cursor-pointer transition-all ${activeFeature === index ? "ring-2 ring-secondary" : ""}`}
+                  whileHover={{ y: -10, scale: 1.02 }}
+                  className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 h-full flex flex-col"
                 >
-                  <div className="flex items-start space-x-4">
-                    <div className={`text-4xl bg-gradient-to-r ${feature.color} bg-clip-text text-transparent`}>{feature.icon}</div>
-                    <div className="flex-1">
-                      <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
-                      <p className="text-gray-400 mb-2">{feature.description}</p>
-                      <div className="flex items-center justify-between">
-                        <span className="text-sm font-medium text-secondary">{feature.stats}</span>
-                        <motion.div
-                          animate={{
-                            scale: activeFeature === index ? 1 : 0,
-                            opacity: activeFeature === index ? 1 : 0,
-                          }}
-                          className="text-green-500"
-                        >
-                          <FaCheckCircle />
-                        </motion.div>
-                      </div>
-                    </div>
+                  <div className={`w-16 h-16 rounded-xl bg-gradient-to-r ${feature.color} flex items-center justify-center text-white mb-4`}>
+                    {feature.icon}
+                  </div>
+                  <h3 className="text-xl font-semibold mb-3 text-gray-900">{feature.title}</h3>
+                  <p className="text-gray-600 mb-4 flex-grow">{feature.description}</p>
+                  <div className="pt-4 border-t border-gray-100">
+                    <span className="text-sm font-semibold text-blue-600">{feature.metric}</span>
                   </div>
                 </motion.div>
-              ))}
-            </div>
-
-            {/* Feature visualization */}
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeFeature}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                className="relative h-[500px] glass-effect rounded-2xl p-8 overflow-hidden"
-              >
-                <div className="absolute inset-0 bg-gradient-to-br from-secondary/10 to-accent/10" />
-
-                {/* Dynamic content based on active feature */}
-                {activeFeature === 0 && (
-                  <div className="relative h-full flex flex-col justify-center items-center text-center">
-                    <FaBrain className="text-8xl text-secondary mb-6" />
-                    <h3 className="text-2xl font-bold mb-4">AI Neural Network</h3>
-                    <p className="text-gray-400">Processing 50M+ data points in real-time</p>
-                    <div className="mt-8 grid grid-cols-3 gap-4 w-full">
-                      <div className="glass-effect p-4 rounded-lg">
-                        <div className="text-2xl font-bold text-secondary">NLP</div>
-                        <div className="text-xs text-gray-400">Natural Language</div>
-                      </div>
-                      <div className="glass-effect p-4 rounded-lg">
-                        <div className="text-2xl font-bold text-accent">ML</div>
-                        <div className="text-xs text-gray-400">Machine Learning</div>
-                      </div>
-                      <div className="glass-effect p-4 rounded-lg">
-                        <div className="text-2xl font-bold text-purple-500">DL</div>
-                        <div className="text-xs text-gray-400">Deep Learning</div>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {activeFeature === 1 && (
-                  <div className="relative h-full">
-                    <h3 className="text-2xl font-bold mb-6">Live Market Dashboard</h3>
-                    <div className="space-y-4">
-                      {[...Array(4)].map((_, i) => (
-                        <motion.div key={i} initial={{ x: -50, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: i * 0.1 }} className="glass-effect p-4 rounded-lg">
-                          <div className="flex items-center justify-between mb-2">
-                            <span className="text-sm text-gray-400">Market Metric {i + 1}</span>
-                            <span className="text-green-500 text-sm">+{(Math.random() * 30).toFixed(1)}%</span>
-                          </div>
-                          <div className="h-2 bg-white/10 rounded-full overflow-hidden">
-                            <motion.div
-                              initial={{ width: 0 }}
-                              animate={{ width: `${60 + Math.random() * 40}%` }}
-                              transition={{ delay: i * 0.1 + 0.5, duration: 0.8 }}
-                              className="h-full bg-gradient-to-r from-secondary to-accent"
-                            />
-                          </div>
-                        </motion.div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {activeFeature === 2 && (
-                  <div className="relative h-full flex items-center justify-center">
-                    <div className="text-center">
-                      <FaGlobe className="text-8xl text-green-500 mb-6 mx-auto" />
-                      <h3 className="text-2xl font-bold mb-4">Global Market Coverage</h3>
-                      <div className="grid grid-cols-2 gap-4 mt-8">
-                        <div className="glass-effect p-4 rounded-lg">
-                          <div className="text-3xl font-bold text-secondary">150+</div>
-                          <div className="text-sm text-gray-400">Countries</div>
-                        </div>
-                        <div className="glass-effect p-4 rounded-lg">
-                          <div className="text-3xl font-bold text-accent">40+</div>
-                          <div className="text-sm text-gray-400">Languages</div>
-                        </div>
-                        <div className="glass-effect p-4 rounded-lg">
-                          <div className="text-3xl font-bold text-green-500">24/7</div>
-                          <div className="text-sm text-gray-400">Monitoring</div>
-                        </div>
-                        <div className="glass-effect p-4 rounded-lg">
-                          <div className="text-3xl font-bold text-purple-500">1M+</div>
-                          <div className="text-sm text-gray-400">Sources</div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {activeFeature === 3 && (
-                  <div className="relative h-full flex items-center justify-center">
-                    <div className="text-center">
-                      <FaShieldAlt className="text-8xl text-orange-500 mb-6 mx-auto" />
-                      <h3 className="text-2xl font-bold mb-4">Enterprise-Grade Security</h3>
-                      <div className="space-y-3 mt-8">
-                        <div className="flex items-center space-x-3 glass-effect p-3 rounded-lg">
-                          <FaCheckCircle className="text-green-500" />
-                          <span>SOC 2 Type II Certified</span>
-                        </div>
-                        <div className="flex items-center space-x-3 glass-effect p-3 rounded-lg">
-                          <FaCheckCircle className="text-green-500" />
-                          <span>256-bit AES Encryption</span>
-                        </div>
-                        <div className="flex items-center space-x-3 glass-effect p-3 rounded-lg">
-                          <FaCheckCircle className="text-green-500" />
-                          <span>GDPR & CCPA Compliant</span>
-                        </div>
-                        <div className="flex items-center space-x-3 glass-effect p-3 rounded-lg">
-                          <FaCheckCircle className="text-green-500" />
-                          <span>99.99% Uptime SLA</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </motion.div>
-            </AnimatePresence>
+              </AnimatedSection>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Services Grid with Enhanced Animation */}
-      <ServicesGrid />
-
-      {/* Platform Capabilities */}
-      <section className="py-20">
+      {/* Services Section with Interactive Cards */}
+      <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <AnimatedSection>
             <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold mb-6">
-                Platform <span className="bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent">Capabilities</span>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="inline-flex items-center space-x-2 bg-gradient-to-r from-blue-100 to-purple-100 px-4 py-2 rounded-full mb-4"
+              >
+                <FaChartLine className="text-blue-600" />
+                <span className="text-sm font-medium text-gray-700">Comprehensive Research Solutions</span>
+              </motion.div>
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900">
+                Everything You Need for <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Market Research</span>
               </h2>
-              <p className="text-xl text-gray-300 max-w-3xl mx-auto">Built for scale, designed for performance</p>
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                From surveys to advanced analytics, we provide the complete toolkit for understanding your market
+              </p>
             </div>
           </AnimatedSection>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16">
-            {capabilities.map((capability, index) => (
-              <div className="glass-effect p-3 md:p-8 rounded-2xl">
-                <AnimatedSection key={index}>
-                  <motion.div whileHover={{ y: -10 }} className="text-center">
-                    <motion.div
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      transition={{ delay: index * 0.1, type: "spring" }}
-                      className="text-5xl font-bold bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent mb-2"
-                    >
-                      {capability.value}
-                    </motion.div>
-                    <h3 className="font-semibold mb-1">{capability.title}</h3>
-                    <p className="text-sm text-gray-400">{capability.description}</p>
-                  </motion.div>
-                </AnimatedSection>
-              </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {services.map((service, index) => (
+              <AnimatedSection key={index}>
+                <motion.div
+                  whileHover={{ y: -10, scale: 1.02 }}
+                  className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 h-full flex flex-col border border-gray-100"
+                >
+                  <div className={`w-16 h-16 rounded-xl bg-gradient-to-r ${service.color} flex items-center justify-center text-white mb-4`}>
+                    {service.icon}
+                  </div>
+                  <h3 className="text-xl font-semibold mb-3 text-gray-900">{service.title}</h3>
+                  <p className="text-gray-600 mb-4 flex-grow">{service.description}</p>
+                  <ul className="space-y-2 mb-4">
+                    {service.features.map((feature, idx) => (
+                      <li key={idx} className="flex items-center text-sm text-gray-600">
+                        <FaCheckCircle className="text-green-500 mr-2" />
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                  <Link
+                    to="/services"
+                    className="inline-flex items-center text-blue-600 font-medium hover:text-blue-700 transition-colors"
+                  >
+                    Learn more <FaArrowRight className="ml-2 text-sm" />
+                  </Link>
+                </motion.div>
+              </AnimatedSection>
             ))}
           </div>
-
-          {/* Integration showcase */}
-          {/* <AnimatedSection>
-            <div className="glass-effect p-8 rounded-2xl">
-              <h3 className="text-2xl font-bold mb-8 text-center">Seamless Integrations</h3>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                {[
-                  { icon: <FaDatabase />, name: "SQL/NoSQL" },
-                  { icon: <FaCloud />, name: "Cloud APIs" },
-                  { icon: <FaMobile />, name: "Mobile SDKs" },
-                  { icon: <FaCode />, name: "REST/GraphQL" },
-                ].map((integration, index) => (
-                  <motion.div key={index} whileHover={{ scale: 1.1 }} className="flex flex-col items-center space-y-2 p-4 rounded-lg hover:bg-white/5 transition-colors">
-                    <div className="text-4xl text-secondary">{integration.icon}</div>
-                    <span className="text-sm">{integration.name}</span>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-          </AnimatedSection> */}
         </div>
       </section>
 
-      {/* Enhanced Stats Counter */}
-      {/* <StatsCounter /> */}
-
-      {/* Testimonials Carousel */}
-      <section className="py-20">
+      {/* Management Features Section */}
+      <section className="py-20 bg-gray-50">
         <div className="container mx-auto px-4">
           <AnimatedSection>
             <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold mb-6">
-                What Our <span className="bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent">Clients Say</span>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="inline-flex items-center space-x-2 bg-gradient-to-r from-green-100 to-emerald-100 px-4 py-2 rounded-full mb-4"
+              >
+                <FaCogs className="text-green-600" />
+                <span className="text-sm font-medium text-gray-700">Complete Research Platform</span>
+              </motion.div>
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900">
+                Streamlined <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Research Management</span>
               </h2>
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                Everything you need to manage research projects from start to finish
+              </p>
+            </div>
+          </AnimatedSection>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {managementFeatures.map((feature, index) => (
+              <AnimatedSection key={index}>
+                <motion.div
+                  whileHover={{ y: -10 }}
+                  className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300"
+                >
+                  <div className="w-16 h-16 bg-gradient-to-r from-blue-100 to-purple-100 rounded-xl flex items-center justify-center text-blue-600 mb-6">
+                    {feature.icon}
+                  </div>
+                  <h3 className="text-2xl font-semibold mb-4 text-gray-900">{feature.title}</h3>
+                  <p className="text-gray-600 mb-6">{feature.description}</p>
+                  <ul className="space-y-3">
+                    {feature.features.map((item, idx) => (
+                      <li key={idx} className="flex items-start space-x-3">
+                        <FaCheckCircle className="text-green-500 mt-1 flex-shrink-0" />
+                        <span className="text-gray-700">{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </motion.div>
+              </AnimatedSection>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Quality Data Analysis Section */}
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-4">
+          <AnimatedSection>
+            <div className="max-w-6xl mx-auto">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div>
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="inline-flex items-center space-x-2 bg-gradient-to-r from-purple-100 to-pink-100 px-4 py-2 rounded-full mb-4"
+                  >
+                    <FaMicroscope className="text-purple-600" />
+                    <span className="text-sm font-medium text-gray-700">Quality Data Analysis</span>
+                  </motion.div>
+                  <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900">
+                    Transform Data into <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Actionable Insights</span>
+                  </h2>
+                  <p className="text-xl text-gray-600 mb-8">
+                    Our AI-powered analysis engine ensures you get the highest quality insights from your research data
+                  </p>
+
+                  <div className="space-y-6">
+                    <div className="flex items-start space-x-4">
+                      <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg flex items-center justify-center text-white flex-shrink-0">
+                        <FaDatabase />
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-semibold text-gray-900 mb-2">Automated Data Cleaning</h3>
+                        <p className="text-gray-600">AI algorithms automatically detect and fix data quality issues, ensuring 99.9% accuracy</p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start space-x-4">
+                      <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center text-white flex-shrink-0">
+                        <HiLightningBolt />
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-semibold text-gray-900 mb-2">Real-Time Processing</h3>
+                        <p className="text-gray-600">Process millions of responses instantly with our distributed computing infrastructure</p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start space-x-4">
+                      <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-500 rounded-lg flex items-center justify-center text-white flex-shrink-0">
+                        <FaChartBar />
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-semibold text-gray-900 mb-2">Advanced Visualization</h3>
+                        <p className="text-gray-600">Interactive dashboards that make complex data easy to understand and act upon</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="relative">
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.8 }}
+                    className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl p-8"
+                  >
+                    {/* Data Quality Metrics */}
+                    <h3 className="text-lg font-semibold text-gray-900 mb-6">Data Quality Metrics</h3>
+                    
+                    <div className="space-y-4">
+                      <div>
+                        <div className="flex justify-between mb-2">
+                          <span className="text-sm text-gray-600">Data Completeness</span>
+                          <span className="text-sm font-semibold text-gray-900">99.7%</span>
+                        </div>
+                        <div className="h-3 bg-gray-200 rounded-full overflow-hidden">
+                          <motion.div
+                            initial={{ width: 0 }}
+                            animate={{ width: "99.7%" }}
+                            transition={{ duration: 1, delay: 0.2 }}
+                            className="h-full bg-gradient-to-r from-green-500 to-emerald-500"
+                          />
+                        </div>
+                      </div>
+
+                      <div>
+                        <div className="flex justify-between mb-2">
+                          <span className="text-sm text-gray-600">Response Validity</span>
+                          <span className="text-sm font-semibold text-gray-900">98.5%</span>
+                        </div>
+                        <div className="h-3 bg-gray-200 rounded-full overflow-hidden">
+                          <motion.div
+                            initial={{ width: 0 }}
+                            animate={{ width: "98.5%" }}
+                            transition={{ duration: 1, delay: 0.4 }}
+                            className="h-full bg-gradient-to-r from-blue-500 to-purple-500"
+                          />
+                        </div>
+                      </div>
+
+                      <div>
+                        <div className="flex justify-between mb-2">
+                          <span className="text-sm text-gray-600">Statistical Significance</span>
+                          <span className="text-sm font-semibold text-gray-900">95.2%</span>
+                        </div>
+                        <div className="h-3 bg-gray-200 rounded-full overflow-hidden">
+                          <motion.div
+                            initial={{ width: 0 }}
+                            animate={{ width: "95.2%" }}
+                            transition={{ duration: 1, delay: 0.6 }}
+                            className="h-full bg-gradient-to-r from-purple-500 to-pink-500"
+                          />
+                        </div>
+                      </div>
+
+                      <div>
+                        <div className="flex justify-between mb-2">
+                          <span className="text-sm text-gray-600">AI Confidence Score</span>
+                          <span className="text-sm font-semibold text-gray-900">97.8%</span>
+                        </div>
+                        <div className="h-3 bg-gray-200 rounded-full overflow-hidden">
+                          <motion.div
+                            initial={{ width: 0 }}
+                            animate={{ width: "97.8%" }}
+                            transition={{ duration: 1, delay: 0.8 }}
+                            className="h-full bg-gradient-to-r from-orange-500 to-red-500"
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Processing Status */}
+                    <div className="mt-8 bg-white rounded-xl p-4 flex items-center justify-between">
+                      <div className="flex items-center space-x-3">
+                        <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg flex items-center justify-center text-white">
+                          <FaServer />
+                        </div>
+                        <div>
+                          <div className="text-sm font-semibold text-gray-900">Processing Status</div>
+                          <div className="text-xs text-gray-600">125,432 records analyzed</div>
+                        </div>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                        <span className="text-xs text-green-600 font-medium">Active</span>
+                      </div>
+                                    </div>
+                  </motion.div>
+
+                  {/* Floating elements */}
+                  <motion.div
+                    animate={{
+                      y: [0, -10, 0],
+                      rotate: [0, 5, 0],
+                    }}
+                    transition={{
+                      duration: 4,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }}
+                    className="absolute -top-4 -right-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg"
+                  >
+                    AI-Powered
+                  </motion.div>
+                </div>
+              </div>
+            </div>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="py-20 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <AnimatedSection>
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900">
+                Trusted by <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Industry Leaders</span>
+              </h2>
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                See how companies are transforming their decision-making with our platform
+              </p>
             </div>
           </AnimatedSection>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {testimonials.map((testimonial, index) => (
               <AnimatedSection key={index}>
-                <motion.div whileHover={{ y: -10 }} className="glass-effect p-8 rounded-2xl h-full flex flex-col">
-                  <FaQuoteLeft className="text-3xl text-secondary/30 mb-4" />
-                  <p className="text-lg text-gray-300 mb-6 flex-1">"{testimonial.quote}"</p>
-                  <div className="border-t border-white/10 pt-4">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="font-semibold">{testimonial.author}</p>
-                        <p className="text-sm text-gray-400">{testimonial.role}</p>
-                        <p className="text-xs text-gray-500">{testimonial.company}</p>
-                      </div>
-                      <div className="flex items-center space-x-1">
-                        {[...Array(testimonial.rating)].map((_, i) => (
-                          <FaStar key={i} className="text-yellow-500 text-sm" />
-                        ))}
-                      </div>
+                <motion.div
+                  whileHover={{ y: -5 }}
+                  className="bg-white p-8 rounded-2xl shadow-lg h-full flex flex-col"
+                >
+                  <FaQuoteLeft className="text-3xl text-blue-200 mb-4" />
+                  <p className="text-lg text-gray-700 mb-6 flex-grow">{testimonial.quote}</p>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="font-semibold text-gray-900">{testimonial.author}</p>
+                      <p className="text-sm text-gray-600">{testimonial.role}</p>
+                      <p className="text-xs text-gray-500">{testimonial.company}</p>
+                    </div>
+                    <div className="flex">
+                      {[...Array(testimonial.rating)].map((_, i) => (
+                        <FaStar key={i} className="text-yellow-500 text-sm" />
+                      ))}
                     </div>
                   </div>
                 </motion.div>
@@ -632,124 +787,144 @@ const Home = () => {
         </div>
       </section>
 
-      {/* ROI Calculator Section */}
-      <section className="py-20 relative">
-        <div className="container mx-auto px-4">
-          <AnimatedSection>
-            <div className="glass-effect p-12 rounded-3xl max-w-4xl mx-auto">
-              <div className="text-center mb-8">
-                <h2 className="text-4xl font-bold mb-4">
-                  Calculate Your <span className="bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent">ROI</span>
-                </h2>
-                <p className="text-xl text-gray-300">See how much you could save with our platform</p>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-                <div className="text-center">
-                  <div className="text-5xl font-bold text-secondary mb-2">75%</div>
-                  <p className="text-gray-400">Time Saved</p>
-                </div>
-                <div className="text-center">
-                  <div className="text-5xl font-bold text-accent mb-2">3.5x</div>
-                  <p className="text-gray-400">More Insights</p>
-                </div>
-                <div className="text-center">
-                  <div className="text-5xl font-bold text-green-500 mb-2">250%</div>
-                  <p className="text-gray-400">Average ROI</p>
-                </div>
-              </div>
-
-              <motion.div whileHover={{ scale: 1.05 }} className="text-center">
-                <Link
-                  to="/demo"
-                  className="inline-flex items-center space-x-2 bg-gradient-to-r from-secondary to-accent px-8 py-4 rounded-full text-lg font-semibold hover:shadow-2xl hover:shadow-secondary/50 transition-all duration-300"
-                >
-                  <span>Get Your Custom ROI Report</span>
-                  <FaArrowRight />
-                </Link>
-              </motion.div>
-            </div>
-          </AnimatedSection>
-        </div>
-      </section>
-
-      {/* Use Cases Section */}
-      <section className="py-20">
-        <div className="container mx-auto px-4">
-          <AnimatedSection>
+      {/* Integration Partners Section */}
+      {/* <section className="py-20 bg-white"> */}
+        {/* <div className="container mx-auto px-4"> */}
+          {/* <AnimatedSection>
             <div className="text-center mb-16">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="inline-flex items-center space-x-2 bg-gradient-to-r from-secondary/20 to-accent/20 px-4 py-2 rounded-full mb-4"
+                className="inline-flex items-center space-x-2 bg-gradient-to-r from-green-100 to-emerald-100 px-4 py-2 rounded-full mb-4"
               >
-                <FaLightbulb className="text-yellow-500" />
-                <span className="text-sm font-medium">Real-World Applications</span>
+                <FaNetworkWired className="text-green-600" />
+                <span className="text-sm font-medium text-gray-700">Seamless Integrations</span>
               </motion.div>
-              <h2 className="text-4xl md:text-5xl font-bold mb-6">
-                How Companies Use <span className="bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent">Our Platform</span>
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900">
+                Works With Your <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Favorite Tools</span>
               </h2>
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                Connect with 100+ platforms to streamline your research workflow
+              </p>
+            </div>
+          </AnimatedSection> */}
+
+          {/* <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 max-w-4xl mx-auto">
+            {[
+              { name: "Salesforce", icon: "SF" },
+              { name: "HubSpot", icon: "HS" },
+              { name: "Slack", icon: "SL" },
+              { name: "Microsoft", icon: "MS" },
+              { name: "Google", icon: "G" },
+              { name: "Tableau", icon: "TB" },
+              { name: "PowerBI", icon: "PB" },
+              { name: "Zapier", icon: "ZP" },
+              { name: "Mailchimp", icon: "MC" },
+              { name: "Segment", icon: "SG" },
+              { name: "Mixpanel", icon: "MP" },
+              { name: "Amplitude", icon: "AM" },
+            ].map((partner, index) => (
+              <motion.div
+                key={index}
+                whileHover={{ y: -5 }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.05 }}
+                className="bg-gray-50 rounded-xl p-6 flex items-center justify-center hover:shadow-lg transition-all duration-300"
+              >
+                <div className="text-center">
+                  <div className="w-12 h-12 bg-gradient-to-r from-gray-200 to-gray-300 rounded-lg flex items-center justify-center mx-auto mb-2 font-bold text-gray-700">
+                    {partner.icon}
+                  </div>
+                  <p className="text-xs text-gray-600">{partner.name}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div> */}
+        {/* </div> */}
+      {/* </section> */}
+
+      {/* Pricing Preview Section */}
+      {/* <section className="py-20 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <AnimatedSection>
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900">
+                Simple, Transparent <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Pricing</span>
+              </h2>
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                Choose the plan that fits your research needs. Scale up or down anytime.
+              </p>
             </div>
           </AnimatedSection>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                title: "Product Launch",
-                description: "Validate market demand and optimize pricing strategy before launch",
-                icon: <FaRocket />,
-                metric: "85% success rate",
-              },
-              {
-                title: "Competitive Intelligence",
-                description: "Track competitor moves and identify market opportunities in real-time",
-                icon: <FaTrophy />,
-                metric: "3x faster insights",
-              },
-              {
-                title: "Market Expansion",
-                description: "Identify new markets and assess entry barriers with AI precision",
-                icon: <FaGlobe />,
-                metric: "60% risk reduction",
-              },
-              {
-                title: "Customer Insights",
-                description: "Understand customer behavior and preferences at scale",
-                icon: <FaUsers />,
-                metric: "95% accuracy",
-              },
-              {
-                title: "Trend Forecasting",
-                description: "Predict market trends before they become mainstream",
-                icon: <FaChartLine />,
-                metric: "12 months ahead",
-              },
-              {
-                title: "Risk Assessment",
-                description: "Evaluate market risks and opportunities with confidence",
-                icon: <FaShieldAlt />,
-                metric: "90% prediction rate",
-              },
-            ].map((useCase, index) => (
-              <AnimatedSection key={index}>
-                <motion.div whileHover={{ y: -10, scale: 1.02 }} className="glass-effect p-6 rounded-xl h-full">
-                  <div className="text-4xl text-secondary mb-4">{useCase.icon}</div>
-                  <h3 className="text-xl font-semibold mb-2">{useCase.title}</h3>
-                  <p className="text-gray-400 mb-4">{useCase.description}</p>
-                  <div className="flex items-center justify-between pt-4 border-t border-white/10">
-                    <span className="text-sm font-medium text-green-500">{useCase.metric}</span>
-                    <FaArrowRight className="text-gray-500" />
-                  </div>
-                </motion.div>
-              </AnimatedSection>
-            ))}
+          <div className="max-w-5xl mx-auto">
+            <div className="bg-gradient-to-br from-blue-50 to-purple-50 p-8 md:p-12 rounded-3xl border border-gray-200">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div className="text-center">
+                  <FaClipboardList className="text-4xl text-blue-600 mx-auto mb-4" />
+                  <h3 className="text-xl font-semibold mb-2 text-gray-900">Starter</h3>
+                  <p className="text-3xl font-bold text-gray-900 mb-1">$299<span className="text-lg text-gray-600">/mo</span></p>
+                  <p className="text-sm text-gray-600">Perfect for small teams</p>
+                </div>
+                
+                <div className="text-center border-l border-r border-gray-300 px-4">
+                  <FaChartLine className="text-4xl text-purple-600 mx-auto mb-4" />
+                  <h3 className="text-xl font-semibold mb-2 text-gray-900">Professional</h3>
+                  <p className="text-3xl font-bold text-gray-900 mb-1">$999<span className="text-lg text-gray-600">/mo</span></p>
+                  <p className="text-sm text-gray-600">Most popular choice</p>
+                </div>
+                
+                <div className="text-center">
+                  <FaRocket className="text-4xl text-pink-600 mx-auto mb-4" />
+                  <h3 className="text-xl font-semibold mb-2 text-gray-900">Enterprise</h3>
+                  <p className="text-3xl font-bold text-gray-900 mb-1">Custom</p>
+                  <p className="text-sm text-gray-600">Tailored solutions</p>
+                </div>
+              </div>
+              
+              <div className="text-center mt-8">
+                <Link
+                  to="/pricing"
+                  className="inline-flex items-center text-blue-600 font-medium hover:text-blue-700 transition-colors"
+                >
+                  View detailed pricing <FaArrowRight className="ml-2" />
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Final CTA Section */}
-      <section className="py-20 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-secondary/20 to-accent/20" />
+      <section className="py-20 relative overflow-hidden bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600">
+        <div className="absolute inset-0 bg-black opacity-10" />
+        
+        {/* Animated background shapes */}
+        <motion.div
+          animate={{
+            scale: [1, 1.2, 1],
+            rotate: [0, 90, 0],
+          }}
+          transition={{
+            duration: 20,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+          className="absolute top-10 left-10 w-64 h-64 bg-white opacity-5 rounded-full blur-3xl"
+        />
+        <motion.div
+          animate={{
+            scale: [1, 1.3, 1],
+            rotate: [0, -90, 0],
+          }}
+          transition={{
+            duration: 25,
+            repeat: Infinity,
+                        ease: "linear",
+          }}
+          className="absolute bottom-10 right-10 w-96 h-96 bg-white opacity-5 rounded-full blur-3xl"
+        />
 
         <div className="container mx-auto px-4 relative z-10">
           <AnimatedSection>
@@ -758,90 +933,116 @@ const Home = () => {
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ type: "spring" }}
-                className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-secondary to-accent rounded-full mb-8"
+                className="inline-flex items-center justify-center w-20 h-20 bg-white/20 backdrop-blur-sm rounded-full mb-8"
               >
-                <FaInfinity className="text-3xl" />
+                <HiSparkles className="text-4xl text-white" />
               </motion.div>
 
-              <h2 className="text-5xl md:text-6xl font-bold mb-6">
-                Ready to Transform Your <span className="bg-gradient-to-r from-secondary via-accent to-purple-500 bg-clip-text text-transparent">Market Research?</span>
+              <h2 className="text-5xl md:text-6xl font-bold mb-6 text-white">
+                Start Making <span className="text-yellow-300">Data-Driven Decisions</span> Today
               </h2>
 
-              <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">Join thousands of companies already using AI-powered insights to make smarter decisions</p>
+              <p className="text-xl text-gray-100 mb-8 max-w-2xl mx-auto">
+                Join 10,000+ companies using our AI-powered platform to understand their markets better
+              </p>
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                   <Link
                     to="/demo"
-                    className="inline-flex items-center justify-center space-x-2 bg-white text-dark px-8 py-4 rounded-full text-lg font-semibold hover:shadow-2xl transition-all duration-300"
+                    className="inline-flex items-center justify-center space-x-2 bg-white text-blue-600 px-8 py-4 rounded-full text-lg font-semibold hover:shadow-2xl transition-all duration-300"
                   >
                     <span>Start Free Trial</span>
                     <FaArrowRight />
                   </Link>
                 </motion.div>
 
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                {/* <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                   <Link
-                    to="/services"
-                    className="inline-flex items-center justify-center space-x-2 glass-effect px-8 py-4 rounded-full text-lg font-semibold hover:bg-white/10 transition-all duration-300"
+                    to="/contact"
+                    className="inline-flex items-center justify-center space-x-2 bg-transparent border-2 border-white text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-white/10 transition-all duration-300"
                   >
-                    <span>Explore Features</span>
+                    <span>Talk to Sales</span>
                   </Link>
-                </motion.div>
+                </motion.div> */}
               </div>
 
-              <p className="text-sm text-gray-400">No credit card required • 14-day free trial • Cancel anytime</p>
+              {/* <div className="flex items-center justify-center space-x-8 text-white/80">
+                <div className="flex items-center space-x-2">
+                  <FaCheckCircle />
+                  <span className="text-sm">No credit card required</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <FaCheckCircle />
+                  <span className="text-sm">14-day free trial</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <FaCheckCircle />
+                  <span className="text-sm">Cancel anytime</span>
+                </div>
+              </div> */}
             </div>
           </AnimatedSection>
         </div>
       </section>
 
-      {/* Video Modal */}
-      <AnimatePresence>
-        {isVideoModalOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
-            onClick={() => setIsVideoModalOpen(false)}
-          >
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="relative w-full max-w-4xl aspect-video bg-black rounded-2xl overflow-hidden"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <button
-                onClick={() => setIsVideoModalOpen(false)}
-                className="absolute top-4 right-4 z-10 w-10 h-10 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center hover:bg-white/20 transition-colors"
-              >
-                ✕
-              </button>
-
-              {/* Video placeholder */}
-              <div className="w-full h-full flex items-center justify-center">
-                <div className="text-center">
-                  <FaPlay className="text-6xl text-secondary mb-4 mx-auto" />
-                  <p className="text-xl">Demo Video Coming Soon</p>
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Floating Action Button */}
-      <motion.div initial={{ opacity: 0, y: 100 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 2 }} className="fixed bottom-8 right-8 z-40">
+      {/* Floating Chat Widget */}
+      <motion.div
+        initial={{ opacity: 0, y: 100 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 2 }}
+        className="fixed bottom-8 right-8 z-40"
+      >
         <motion.button
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
-          className="bg-gradient-to-r from-secondary to-accent p-4 rounded-full shadow-2xl shadow-secondary/50 flex items-center space-x-2 group"
+          className="bg-gradient-to-r from-blue-600 to-purple-600 p-4 rounded-full shadow-2xl text-white group relative"
         >
-          <FaRocket className="text-xl" />
-          <span className="max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-xs transition-all duration-300">Get Started Now</span>
+          <div className="relative">
+            <FaBrain className="text-xl" />
+            <span className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full animate-pulse"></span>
+          </div>
+          <motion.div
+            initial={{ opacity: 0, scale: 0 }}
+            whileHover={{ opacity: 1, scale: 1 }}
+            className="absolute bottom-full right-0 mb-2 bg-gray-900 text-white px-3 py-1 rounded-lg text-sm whitespace-nowrap"
+          >
+            AI Assistant Online
+          </motion.div>
         </motion.button>
+      </motion.div>
+
+      {/* Quick Stats Bar */}
+      <motion.div
+        initial={{ y: 100 }}
+        animate={{ y: 0 }}
+        transition={{ delay: 1 }}
+        className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 py-3 px-4 z-30 hidden lg:block"
+      >
+        <div className="container mx-auto">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-8">
+              <div className="flex items-center space-x-2">
+                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                <span className="text-sm text-gray-600">System Status: <span className="font-semibold text-green-600">All Systems Operational</span></span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <FaClock className="text-gray-500 text-sm" />
+                <span className="text-sm text-gray-600">Last Update: <span className="font-semibold">2 seconds ago</span></span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <FaDatabase className="text-gray-500 text-sm" />
+                <span className="text-sm text-gray-600">Data Points: <span className="font-semibold">125K/sec</span></span>
+              </div>
+            </div>
+            <button
+              onClick={() => document.querySelector('.fixed.bottom-0').style.display = 'none'}
+              className="text-gray-400 hover:text-gray-600 transition-colors"
+            >
+              ✕
+            </button>
+          </div>
+        </div>
       </motion.div>
     </div>
   );
