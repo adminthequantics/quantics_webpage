@@ -273,12 +273,12 @@ const Home = () => {
                   </motion.div>
 
                   <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                    <Link
+                    {/* <Link
                       to="/contact"
                       className="inline-flex items-center justify-center space-x-2 bg-white border-2 border-gray-300 px-8 py-4 rounded-full text-gray-700 font-semibold hover:border-gray-400 hover:shadow-lg transition-all duration-300"
                     >
                       <span>Schedule Demo</span>
-                    </Link>
+                    </Link> */}
                   </motion.div>
                 </div>
 
