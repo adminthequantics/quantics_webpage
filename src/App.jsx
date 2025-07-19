@@ -7,6 +7,8 @@ import Services from "./pages/Services";
 import Solutions from "./pages/Solutions";
 import Industries from "./pages/Industries";
 import Demo from "./pages/Demo";
+import Privacy from "./pages/PrivacyPolicy";
+import Terms from "./pages/TermsOfService";
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
           <Route path="/solutions" element={<Solutions />} />
           <Route path="/industries" element={<Industries />} />
           <Route path="/demo" element={<Demo />} />
+           <Route path="/privacy" element={<Privacy />} />
+          <Route path="/terms" element={<Terms />} />
         </Routes>
         <Footer />
       </div>
