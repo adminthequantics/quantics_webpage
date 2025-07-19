@@ -42,7 +42,7 @@ const Footer = () => {
               </p>
               
               {/* Platform Stats */}
-              <div className="grid grid-cols-3 gap-4">
+              {/* <div className="grid grid-cols-3 gap-4">
                 <div className="text-center">
                   <div className="text-2xl font-bold text-blue-400">10K+</div>
                   <div className="text-xs text-gray-500">Active Users</div>
@@ -55,7 +55,7 @@ const Footer = () => {
                   <div className="text-2xl font-bold text-pink-400">99.9%</div>
                   <div className="text-xs text-gray-500">Accuracy</div>
                 </div>
-              </div>
+              </div> */}
             </motion.div>
           </div>
 
