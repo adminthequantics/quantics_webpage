@@ -164,7 +164,7 @@ const Footer = () => {
                   className="text-gray-400 hover:text-white text-sm transition-colors flex items-center gap-2"
                 >
                   <FaEnvelope className="text-xs text-blue-400" />
-                  hello@thequantics.com
+                  admin@thequantics.com
                 </a>
               </li>
               <li>
