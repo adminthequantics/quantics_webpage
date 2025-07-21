@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { HiMenu, HiX } from "react-icons/hi";
-import logo from "../../assets/logo3.png";
+import logo from "../../assets/logo2.png";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -56,7 +56,7 @@ const Navbar = () => {
                 <img
                   src={logo}
                   alt="MarketInsight Logo"
-                  className={`transition-all duration-300 ${scrolled ? "w-[180px]" : "w-[180px]"
+                  className={`transition-all duration-300 ${scrolled ? "w-[160px]" : "w-[160px]"
                     } w-auto logo-blue`}
                 />
               </Link>
@@ -156,12 +156,7 @@ const Navbar = () => {
         </AnimatePresence>
       </nav>
 
-      <style jsx>{`
-        /* CSS filter to change white logo to blue */
-        .logo-blue {
-          filter: brightness(0) saturate(100%) invert(27%) sepia(98%) saturate(2073%) hue-rotate(207deg) brightness(95%) contrast(100%);
-        }
-      `}</style>
+      {/*  */}
     </>
   );
 };
