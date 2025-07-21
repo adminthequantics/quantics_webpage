@@ -24,7 +24,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-12">
           {/* Brand & Description - Takes 2 columns */}
           <div className="lg:col-span-2">
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               className="mb-6"
@@ -37,10 +37,10 @@ const Footer = () => {
                 <span className="text-sm text-gray-400">AI-Powered Market Intelligence Platform</span>
               </div>
               <p className="text-gray-400 text-sm leading-relaxed mb-6">
-                Transform your business decisions with real-time market insights powered by advanced AI. 
+                Transform your business decisions with real-time market insights powered by advanced AI.
                 Our platform analyzes millions of data points to deliver actionable intelligence that drives growth.
               </p>
-              
+
               {/* Platform Stats */}
               {/* <div className="grid grid-cols-3 gap-4">
                 <div className="text-center">
@@ -64,8 +64,8 @@ const Footer = () => {
             <h4 className="font-semibold mb-4 text-sm uppercase tracking-wider text-gray-300">Solutions</h4>
             <ul className="space-y-3">
               <li>
-                <Link 
-                  to="/services" 
+                <Link
+                  to="/services"
                   onClick={scrollToTop}
                   className="text-gray-400 hover:text-white text-sm transition-all duration-200 flex items-center gap-2 group"
                 >
@@ -75,8 +75,8 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link 
-                  to="/solutions" 
+                <Link
+                  to="/solutions"
                   onClick={scrollToTop}
                   className="text-gray-400 hover:text-white text-sm transition-all duration-200 flex items-center gap-2 group"
                 >
@@ -86,8 +86,8 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link 
-                  to="/industries" 
+                <Link
+                  to="/industries"
                   onClick={scrollToTop}
                   className="text-gray-400 hover:text-white text-sm transition-all duration-200 flex items-center gap-2 group"
                 >
@@ -97,8 +97,8 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link 
-                  to="/demo" 
+                <Link
+                  to="/demo"
                   onClick={scrollToTop}
                   className="text-gray-400 hover:text-white text-sm transition-all duration-200 flex items-center gap-2 group"
                 >
@@ -140,7 +140,7 @@ const Footer = () => {
           {/* Contact & CTA */}
           <div>
             <h4 className="font-semibold mb-4 text-sm uppercase tracking-wider text-gray-300">Get Started</h4>
-            
+
             {/* Mini CTA */}
             <motion.div
               whileHover={{ scale: 1.05 }}
@@ -159,21 +159,21 @@ const Footer = () => {
 
             <ul className="space-y-3">
               <li>
-                <a 
-                  href="mailto:hello@thequantics.com" 
+                <a
+                  href="mailto:hello@thequantics.com"
                   className="text-gray-400 hover:text-white text-sm transition-colors flex items-center gap-2"
                 >
                   <FaEnvelope className="text-xs text-blue-400" />
-                  admin@thequantics.com
+                  sales@thequantics.com
                 </a>
               </li>
               <li>
-                <a 
-                  href="tel:+1234567890" 
+                <a
+                  href="tel:+1234567890"
                   className="text-gray-400 hover:text-white text-sm transition-colors flex items-center gap-2"
                 >
                   <FaPhone className="text-xs text-green-400" />
-                  +1 (234) 567-890
+                  ‎+91 86191 83712
                 </a>
               </li>
             </ul>
@@ -189,15 +189,15 @@ const Footer = () => {
                 &copy; {currentYear} The Quantics. All rights reserved.
               </p>
               <div className="flex gap-6 text-sm">
-                <Link 
-                  to="/privacy" 
+                <Link
+                  to="/privacy"
                   onClick={scrollToTop}
                   className="text-gray-400 hover:text-white transition-colors"
                 >
                   Privacy Policy
                 </Link>
-                <Link 
-                  to="/terms" 
+                <Link
+                  to="/terms"
                   onClick={scrollToTop}
                   className="text-gray-400 hover:text-white transition-colors"
                 >
@@ -218,11 +218,11 @@ const Footer = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   whileHover={{ y: -3 }}
-                                    className="w-10 h-10 bg-gradient-to-r from-gray-800 to-gray-700 rounded-lg flex items-center justify-center hover:from-blue-600 hover:to-blue-700 transition-all duration-300 group"
+                  className="w-10 h-10 bg-gradient-to-r from-gray-800 to-gray-700 rounded-lg flex items-center justify-center hover:from-blue-600 hover:to-blue-700 transition-all duration-300 group"
                 >
                   <FaLinkedin className="text-sm group-hover:scale-110 transition-transform" />
                 </motion.a>
-                <motion.a
+                {/* <motion.a
                   href="https://twitter.com"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -230,8 +230,8 @@ const Footer = () => {
                   className="w-10 h-10 bg-gradient-to-r from-gray-800 to-gray-700 rounded-lg flex items-center justify-center hover:from-blue-400 hover:to-blue-500 transition-all duration-300 group"
                 >
                   <FaTwitter className="text-sm group-hover:scale-110 transition-transform" />
-                </motion.a>
-                <motion.a
+                </motion.a> */}
+                {/* <motion.a
                   href="https://github.com"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -239,13 +239,13 @@ const Footer = () => {
                   className="w-10 h-10 bg-gradient-to-r from-gray-800 to-gray-700 rounded-lg flex items-center justify-center hover:from-gray-600 hover:to-gray-700 transition-all duration-300 group"
                 >
                   <FaGithub className="text-sm group-hover:scale-110 transition-transform" />
-                </motion.a>
+                </motion.a> */}
               </div>
             </div>
           </div>
 
           {/* AI Badge */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5 }}
