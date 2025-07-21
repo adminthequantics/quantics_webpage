@@ -135,7 +135,7 @@ const Footer = () => {
             <div className="flex items-center gap-4">
               <span className="text-xs text-gray-500 mr-2">Follow us:</span>
               <motion.a
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/in/the-quantics-9ab071376/"
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ y: -3 }}
