@@ -44,23 +44,21 @@ jobs:
           overwrite: true
           rm: true
 
-      - name: Deploy as root
+      - name: Start static site with PM2
         uses: appleboy/ssh-action@v1
         with:
           host: ${{ secrets.HOSTINGER_HOST }}
-          username: root # Using root directly
+          username: root
           password: ${{ secrets.HOSTINGER_SSH_PASSWORD }}
           port: 22
           script: |
             cd /var/www/thequantics
-            
-            # Install all dependencies as root
-            npm install
-            cd server && npm install --production && cd ..
-            
-            # PM2 setup as root
-            npm install -g pm2
+
+            # Install 'serve' globally if not present
+            npm install -g serve pm2
+
+            # Start static site using PM2
             pm2 delete thequanticsapp || true
-            pm2 start /var/www/thequantics/ecosystem.config.cjs --env production
+            pm2 start ecosystem.config.cjs --env production
             pm2 save
             pm2 startup systemd -u root --hp /root
