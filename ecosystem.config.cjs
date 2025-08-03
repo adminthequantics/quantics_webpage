@@ -21,7 +21,7 @@ module.exports = {
       STATIC_DIR: '/var/www/thequantics/dist'
     },
     
-    // Production environment variables
+    // Production environment variable
     env_production: {
       NODE_ENV: 'production',
       PORT: 5001,
