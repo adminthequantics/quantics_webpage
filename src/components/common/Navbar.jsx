@@ -56,7 +56,7 @@ const Navbar = () => {
                 <img
                   src={logo}
                   alt="MarketInsight Logo"
-                  className={`w-[40px] h-auto transition-all duration-300 ${scrolled ? "w-[30px]" : "w-[40px]"}`}
+                  className={`transition-all duration-300 ${scrolled ? "w-[150px]" : "w-[200px]"} h-auto`}
                 />
               </Link>
 
